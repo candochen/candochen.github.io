@@ -3,9 +3,9 @@
 # ----------------------- #
 
 url: http://candochen.github.io
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+title: 观察 记录 思考
+subtitle: 关于计算机、数学、英语和历史的点滴
+author: Cando
 simple_search: https://www.google.com/search
 description:
 
@@ -33,6 +33,7 @@ destination: public
 plugins: plugins
 code_dir: downloads/code
 category_dir: blog/categories
+category_title_prefix: "Category: "
 markdown: rdiscount
 rdiscount:
   extensions:

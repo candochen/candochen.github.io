@@ -1,0 +1,29 @@
+---
+layout: post
+title: "Cannot vs Can not"
+date: 2014-08-18 19:09:22 +0800
+comments: true
+categories: 英语
+---
+刚才看邮件时候突然想起我平时老是分不清e.g. 和 i.e. 这两个缩写，所以特地网上查了一下。原来e.g. 是拉丁语exampli gratia 的缩写，意思是for example; 而i.e. 是拉丁语id est的缩写，意思是that is. 
+
+再者，我在有些邮件中看到有人写e.g.后面没有跟逗号 , 这就像for example不加逗号，这也是不对的。至于我们平常工作中用到的cannot, 比如This bug cannot be reproduced. 一般来说，我们不用can not. 看网上解释，两种用法都对，但是第一种比较常用，假如你想用can not，下面这两种情况可能符合： 
+
+- 和别的词一起用，比如can not only
+
+-  表示强调，比如 No, you can not wash the dog in the Maytag.  
+
+讲到这里，我又突然想起了，有次我开会时候的窘迫。有人跟客户电话会议，在我介绍完自己之后，老外突然来了句How are you? 我当时就懵了，心想，这时不是应该说Nice to meet you了吗？ 于是，我条件反射地说了, I am fine, and you. 于是客套来客套来，客套去。
+
+有个老外程序员说，你们中国人真有趣，我说How are you的时候，你们一定会说Fine, and you，就好像一个数学函数一样。
+
+但是，我们真的不知道怎么说了呀，老师又没教，也没有专门培训过。所以，跟不同的客户电话会议之前，我老是神经紧张，生怕说错了什么话，导致让对方觉得我不够礼貌。幸好说native english的老外们一般都比较nice，有时候会很开心地跟你聊，感觉就像是一个外国人说普通话，说错了我们也觉得没什么。
+
+呵呵。
+
+参考链接
+
+
+[http://public.wsu.edu/~brians/errors/e.g.html](http://public.wsu.edu/~brians/errors/e.g.html)
+
+[http://www.oxforddictionaries.com/words/cannot-or-can-not](http://www.oxforddictionaries.com/words/cannot-or-can-not)
