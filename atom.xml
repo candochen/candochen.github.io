@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2014-08-27T11:20:37+08:00</updated>
+  <updated>2014-08-27T11:24:44+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -21,31 +21,6 @@
     <content type="html"><![CDATA[<p>最近工作之余，我还学习和很多其他东西，由于用力过猛，加上对知识的消化、吸收工作没有做好，导致现在感觉到身体上的疲惫和心理上的焦虑。</p>
 
 <p>所以，我要休息，休息一会！</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Scala的Currying 和 Partially Applied Function]]></title>
-    <link href="http://candochen.github.io/blog/2014/08/21/scala-currying/"/>
-    <updated>2014-08-21T17:47:16+08:00</updated>
-    <id>http://candochen.github.io/blog/2014/08/21/scala-currying</id>
-    <content type="html"><![CDATA[<p>今天看了王垠的一篇关于Currying的文章 <a href="http://www.yinwang.org/blog-cn/2013/04/02/currying/">谈谈Currying</a>, 看完之后，我想知道Scala的Currying是否跟Haskel的相同，于是我查了查官网和其他文章，并做记录和分析如下。</p>
-
-<p>Scala官网对Currying给出的定义是这样的：</p>
-
-<blockquote><p>Methods may define multiple parameter lists. When a method is called with a fewer number of parameters lists, then this will yield a function taking the missing parameter list as its arguments.</p></blockquote>
-
-<p>它说，一个函数可能有多个参数列表，对于一个拥有多个参数列表的函数来说，假如我们只传入部分参数列表去调用这个函数，那么这时候函数就会返回另外一个函数，这个函数的参数列表就是剩余的参数列表。举个例子，</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Awesome code snippet</span></code></pre></td></tr></table></div></figure>
-
-
-<pre><code>def filter(xs: List[Int], p: Int =&gt; Boolean): List  [Int] =
-    if (xs.isEmpty) xs
-    else if(p(xs.head)) xs.head :: filter(xs.tail, p)
-    else filter(xs.tail, p)
-</code></pre>
 ]]></content>
   </entry>
   
