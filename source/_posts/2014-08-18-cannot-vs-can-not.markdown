@@ -3,7 +3,7 @@ layout: post
 title: "Cannot vs Can not"
 date: 2014-08-18 19:09:22 +0800
 comments: true
-categories: 英语
+categories: English
 ---
 刚才看邮件时候突然想起我平时老是分不清e.g. 和 i.e. 这两个缩写，所以特地网上查了一下。原来e.g. 是拉丁语exampli gratia 的缩写，意思是for example; 而i.e. 是拉丁语id est的缩写，意思是that is. 
 
