@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: 其他 | 观察 记录 思考]]></title>
-  <link href="http://candochen.github.io/blog/categories/qi-ta/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Others | 观察 记录 思考]]></title>
+  <link href="http://candochen.github.io/blog/categories/others/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2014-08-27T11:24:44+08:00</updated>
+  <updated>2014-08-29T18:29:53+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[休息，休息一会]]></title>
+    <link href="http://candochen.github.io/blog/2014/08/27/have-a-rest/"/>
+    <updated>2014-08-27T11:15:47+08:00</updated>
+    <id>http://candochen.github.io/blog/2014/08/27/have-a-rest</id>
+    <content type="html"><![CDATA[<p>最近工作之余，我还学习和很多其他东西，由于用力过猛，加上对知识的消化、吸收工作没有做好，导致现在感觉到身体上的疲惫和心理上的焦虑。</p>
+
+<p>所以，我要休息，休息一会！</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[一些励志的话]]></title>

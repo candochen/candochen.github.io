@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: 英语 | 观察 记录 思考]]></title>
-  <link href="http://candochen.github.io/blog/categories/ying-yu/atom.xml" rel="self"/>
+  <title><![CDATA[Category: English | 观察 记录 思考]]></title>
+  <link href="http://candochen.github.io/blog/categories/english/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2014-08-27T11:24:44+08:00</updated>
+  <updated>2014-08-29T18:29:53+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[文昌人常说的英语]]></title>
+    <link href="http://candochen.github.io/blog/2014/08/20/wenchangeenglish/"/>
+    <updated>2014-08-20T19:03:03+08:00</updated>
+    <id>http://candochen.github.io/blog/2014/08/20/wenchangeenglish</id>
+    <content type="html"><![CDATA[<p>排球自从被华侨引进后就成了我们文昌的最热门运动，球出界的时候球员都大喊&#8221;奥赛&#8221;，它是个英语outside.   在文昌话中，螺丝刀叫&#8221;斯哥杜&#8221;, 其来源于英语&#8221;screw&#8221;.  另外我们文昌人管穿皮鞋叫穿&#8221;boots&#8221;.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Cannot vs Can Not]]></title>
