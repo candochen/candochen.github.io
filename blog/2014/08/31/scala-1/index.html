@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>一些励志的话 - 观察 记录 思考</title>
+  <title>Scala 点滴 （1） - 观察 记录 思考</title>
   <meta name="author" content="Cando">
 
   
-  <meta name="description" content="尽管并不是绝对，但确实大多数事情都需要熟能生巧。做得多了，自然就擅长了；擅长了，就自然做得比别人好；做得比别人好，兴趣就大起来了，而后就更喜欢做，更擅长，更……良性循环。
-但，同样，做得多就需要大量的时间投入。没兴趣，往往只不过是结果而已，却被当作不去做好的理由，最终的惩罚就是大量的时间白白流逝 &hellip;">
+  <meta name="description" content="在Coursera上学习Scala编程有两个月了， Scala的基础课程即将结束。在新的课程《响应式编程》开始之前，我想总结一下。 编程范式 如果我们把现在的编程范式做下分类，我们可以分成3类： 指令编程范式
+函数编程范式
+逻辑编程范式 而以上每种编程范式都与面向对象编程范式正交， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://candochen.github.io/blog/2014/08/19/inspiration">
+  <link rel="canonical" href="http://candochen.github.io/blog/2014/08/31/scala-1">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="观察 记录 思考" type="application/atom+xml">
@@ -70,7 +71,7 @@
   
   <header>
     
-      <h1 class="entry-title">一些励志的话</h1>
+      <h1 class="entry-title">Scala 点滴 （1）</h1>
     
     
       <p class="meta">
@@ -79,25 +80,68 @@
 
 
 
-<time class='entry-date' datetime='2014-08-19T17:15:38+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:15 pm</span></time>
+<time class='entry-date' datetime='2014-08-31T11:06:48+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>11:06 am</span></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>尽管并不是绝对，但确实大多数事情都需要熟能生巧。做得多了，自然就擅长了；擅长了，就自然做得比别人好；做得比别人好，兴趣就大起来了，而后就更喜欢做，更擅长，更……良性循环。
-但，同样，做得多就需要大量的时间投入。没兴趣，往往只不过是结果而已，却被当作不去做好的理由，最终的惩罚就是大量的时间白白流逝。
-往往并不是有兴趣才能做好，而是做好了才有兴趣。
-方法固然重要，但是比起“用功”来说，方法几乎可以忽略不计。所有学习上的成功，都只靠两件事：策略和坚持，而坚持本身就应该是最重要的策略。</p>
+<div class="entry-content"><p>在Coursera上学习Scala编程有两个月了， Scala的基础课程即将结束。在新的课程《响应式编程》开始之前，我想总结一下。</p>
 
-<p>事实上，没有什么要比发现、培养、呵护、调整自己的心智更重要的事情了。</p>
+<h2>编程范式</h2>
 
-<p>&ndash;摘自《把时间当做朋友》</p>
+<p>如果我们把现在的编程范式做下分类，我们可以分成3类：</p>
 
-<p>在你的人生中会出生很多岔道，然后呢你每一次选择就会耗去你的时间，耗去你的精力，我觉得要克服焦虑的办法，其实大概就是说你在二十岁到三十岁之间的，这一段时间的时候，在你生命力最旺盛的时候，你要想清楚几件事，第一件事你要想清楚说我这辈子最喜欢的工作是什么，就我热爱什么东西，这个是最关键的事情；第二要让自己成为一个专业的人；第三你愿意用未来的二十年时间去完成，这件你喜欢的工作和你专业的事情。</p>
+<blockquote><ol>
+<li>指令编程范式</li>
+<li>函数编程范式</li>
+<li>逻辑编程范式</li>
+</ol>
+</blockquote>
 
-<p>&ndash;摘自 《我懂你的焦虑》 吴晓波在《开讲啦》节目中的演讲</p>
+<p>而以上每种编程范式都与面向对象编程范式正交，意思是说指令型编程语言可以拥有面向对象特征，同理其他两种编程范式都可以拥有面向对象的特征。</p>
+
+<p>所谓指令型编程语言范式是从冯. 诺依曼的计算机模型引申而来的，它的特点正如冯.诺依曼模型一样，运行时通过总线把它把指令和数据从内存加载到CPU，然后把结果又送回去。
+更具体地说，指令编程范式对于于冯.诺依曼计算机模型有一种对应关系，</p>
+
+<blockquote><ol>
+<li>变量 相对于 内存单元</li>
+<li>释放变量  相对于 load 指令</li>
+<li>变量赋值  相对于 store 指令</li>
+<li>分支控制  相对于 jump 指令</li>
+</ol>
+</blockquote>
+
+<p>在严格定义下，函数式编程范式则有以下特点</p>
+
+<blockquote><ol>
+<li>没有变量，也就没有对变量赋值</li>
+<li>没有指令编程范式的控制结构，例如while，loop等等</li>
+<li>函数是函数式编程范式里的头等公民，这意味着函数，就像普通值一样，可以在任何地方定义，包括在其他函数里面；此外，函数也像普通值一样，可以作为参数传到其他函数里，或作为结果返回，当然我们也可以对函数定义一下操作符用于把函数组合起来。</li>
+</ol>
+</blockquote>
+
+<p>假如我宽泛地给函数式编程范式给个定义，我们可以说，函数式编程范式主要是一种关注函数的编程范式。</p>
+
+<p>至于逻辑编程范式，由于Martin Ordersky并没有给出解释，所以这里也略过。</p>
+
+<p>在市面上的流行语言中，如果根据以上编程范式分类，函数式编程语言看起来应该像这样子</p>
+
+<ol>
+<li><p>严格定义下的函数式编程语言</p>
+
+<blockquote><p> Pure Lisp, XSLT, XPath, XQuery, FP
+ Haskell (without I/O Monad or UnsafePerformIO)</p></blockquote></li>
+<li><p>广义定义下的函数式编程语言</p>
+
+<blockquote><p>Lisp, Scheme, Racket, Clojure
+SML, Ocaml, F#
+Haskell (full language)
+Scala
+Smalltalk, Ruby (!)</p></blockquote></li>
+</ol>
+
 </div>
 
 
@@ -113,12 +157,12 @@
 
 
 
-<time class='entry-date' datetime='2014-08-19T17:15:38+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:15 pm</span></time>
+<time class='entry-date' datetime='2014-08-31T11:06:48+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>11:06 am</span></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/others/'>others</a>
+    <a class='category' href='/blog/categories/scala/'>scala</a>
   
 </span>
 
@@ -134,10 +178,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/08/18/cannot-vs-can-not/" title="Previous Post: Cannot vs Can not">&laquo; Cannot vs Can not</a>
+        <a class="basic-alignment left" href="/blog/2014/08/31/learning-how-to-learn-3/" title="Previous Post: 如何学习 (3)">&laquo; 如何学习 (3)</a>
       
       
-        <a class="basic-alignment right" href="/blog/2014/08/20/wenchangeenglish/" title="Next Post: 文昌人常说的英语">文昌人常说的英语 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2014/09/01/learning-how-to-learn-4/" title="Next Post: 如何学习 (4)">如何学习 (4) &raquo;</a>
       
     </p>
   </footer>
