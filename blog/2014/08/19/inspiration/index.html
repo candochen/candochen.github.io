@@ -31,6 +31,38 @@
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   <!--
 -->
 </head>
@@ -93,11 +125,11 @@
 
 <p>事实上，没有什么要比发现、培养、呵护、调整自己的心智更重要的事情了。</p>
 
-<p>&ndash;摘自《把时间当做朋友》</p>
+<p>–摘自《把时间当做朋友》</p>
 
 <p>在你的人生中会出生很多岔道，然后呢你每一次选择就会耗去你的时间，耗去你的精力，我觉得要克服焦虑的办法，其实大概就是说你在二十岁到三十岁之间的，这一段时间的时候，在你生命力最旺盛的时候，你要想清楚几件事，第一件事你要想清楚说我这辈子最喜欢的工作是什么，就我热爱什么东西，这个是最关键的事情；第二要让自己成为一个专业的人；第三你愿意用未来的二十年时间去完成，这件你喜欢的工作和你专业的事情。</p>
 
-<p>&ndash;摘自 《我懂你的焦虑》 吴晓波在《开讲啦》节目中的演讲</p>
+<p>–摘自 《我懂你的焦虑》 吴晓波在《开讲啦》节目中的演讲</p>
 </div>
 
 
@@ -156,7 +188,11 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 （1）</a>
+        <a href="/blog/2014/08/31/scala-2/">Scala 点滴 (2)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 (1)</a>
       </li>
     
       <li class="post">
@@ -164,11 +200,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习(2)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-1/">如何学习 (1)</a>
+        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习 (2)</a>
       </li>
     
   </ul>
@@ -194,7 +226,7 @@
     
 	
       <li class="post">
-        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (1) </a>
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (2) </a>
       </li>
     
   </ul>

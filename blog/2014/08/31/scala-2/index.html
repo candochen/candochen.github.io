@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Scala 点滴 (2) - 观察 记录 思考</title>
+  <meta name="author" content="Cando">
+
+  
+  <meta name="description" content="Scala函数之初体验 下面这个例子是Scala发明者Martin Odersky在Coursera上授课用的例子，这个例子在SICP(Structure and Interpretation of Computer Programs, 计算机程序的构造和解释)一书中也有。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://candochen.github.io/blog/2014/08/31/scala-2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="观察 记录 思考" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  <!--
+-->
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">观察 记录 思考</a></h1>
+  
+    <h2>关于计算机、数学、英语和历史的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:candochen.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Scala 点滴 (2)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-31T11:20:58+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>11:20 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2 id="scala">Scala函数之初体验</h2>
+
+<p>下面这个例子是Scala发明者Martin Odersky在Coursera上授课用的例子，这个例子在SICP(Structure and Interpretation of Computer Programs, 计算机程序的构造和解释)一书中也有。我这里重述这个例子的原因是这个例子即包含数学思想又包含Scala语法，它即实用又有趣。</p>
+
+<p>它就是，</p>
+
+<h3 id="sqrt2">通过牛顿法求$\sqrt{2}$的近似值</h3>
+
+<p>从这篇维基百科<a href="http://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF%E6%B3%95">牛顿法介绍</a> 我们可以知道，牛顿法是一种迭代方法。所谓迭代的意思是上一次计算的结果都对本次计算起作用，换句话说，上次计算得出的结果可以作为本次计算的输入。</p>
+
+<p>本文主要讲述如果用Scala实现牛顿法，所以牛顿法的分析过程就此略过，而直接给出公式：</p>
+
+<script type="math/tex; mode=display">x_{n+1} = x_n - \frac{f(x_n)}{f'(x_{n})}</script>
+
+<p>$\sqrt{2}$就是$f(x) = x^2 - 2 = 0$的根，根据上面的公式通过求得</p>
+
+<script type="math/tex; mode=display">x_{n+1} = \frac{x_n + \frac{2}{x_n}}{2}</script>
+
+<p>现在只要给出一个初始值$x_0$就可以通过上面的迭代公式求出结果。因为$f(x) = x^2 - 2 = 0$，所以$x^2=2$，易知1&lt;x&lt;2。因此，我们可以给出一个初始值$x_0 = 1 $ 。</p>
+
+<p>一切准备工作就绪，我可以编程了…</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">//首先我需要一个求绝对值的函数（虽然Scala的标准库中有这个函数，这里为了描述的完整性，先不考虑它)
+</span><span class="line">def abs(x: Double) = if(x &gt;=0) x else -x
+</span><span class="line">	
+</span><span class="line">//然后“猜”一值，这个值原先是初始值, 之后是每次迭代得到的新结果
+</span><span class="line">def isGoodEnough(guess: Double) = 
+</span><span class="line">	abs(guess * guess - 2) &lt; 0.000001
+</span><span class="line">
+</span><span class="line">//这个就是迭代公式
+</span><span class="line">def improve(guess: Double) = (guess + 2/guess) / 2
+</span><span class="line">
+</span><span class="line">//迭代函数,迭代函数必须有返回值类型
+</span><span class="line">def iter(guess: Double):Double = {
+</span><span class="line">	if (isGoodEnough(guess)) guess
+</span><span class="line">	else iter(improve(guess))
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">//求根函数, 传入迭代的初始值 1
+</span><span class="line">def sqrt2 = iter(1)</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>学过编程的人都会觉得上面的程序好傻。首先，这个sqrt2只能够求$\sqrt{2}$的值，它不能求$\sqrt{3} , \sqrt{5} …$, 其次isGoodEnough函数的精度不能写死了，总之不够灵活(flexible)。</p>
+
+<p>所以，我进行第一次重构…</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>第一次重构 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">val precision = 0.000001
+</span><span class="line">
+</span><span class="line">//首先我需要一个求绝对值的函数（虽然Scala的标准库中有这个函数，这里为了描述的完整性，先不考虑它)
+</span><span class="line">def abs(x: Double) = if(x &gt;=0) x else -x
+</span><span class="line">	
+</span><span class="line">//然后“猜”一值，这个值原先是初始值, 之后是每次迭代得到的新结果
+</span><span class="line">def isGoodEnough(guess: Double, x: Double) = 
+</span><span class="line">	abs(guess * guess - x) &lt; precision
+</span><span class="line">
+</span><span class="line">//这个就是迭代公式
+</span><span class="line">def improve(guess: Double, x: Double) = (guess + x/guess) / 2
+</span><span class="line">
+</span><span class="line">//迭代函数,迭代函数必须有返回值类型
+</span><span class="line">def iter(guess: Double, x: Double):Double = {
+</span><span class="line">	if (isGoodEnough(guess, x)) guess
+</span><span class="line">	else iter(improve(guess, x), x)
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">//求根函数, 传入迭代的初始值 1
+</span><span class="line">def sqrt(x: Double) = iter(1, x)</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>经过一次重构，程序比第一次好些了，但是还有个问题：因为isGoodEnough, improve, iter这些函数都是sqrt函数计算的一部分，能不能把它们封装到函数sqrt里面呢？ 答案是可以的，这也正是Scala的一个优点（相对于Java）。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>第二次重构 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">//求根函数, 传入迭代的初始值 1
+</span><span class="line">def sqrt(x: Double)  = {
+</span><span class="line">	val precision = 0.000001
+</span><span class="line">	
+</span><span class="line">	//首先我需要一个求绝对值的函数（虽然Scala的标准库中有这个函数，这里为了描述的完整性，先不考虑它)
+</span><span class="line">	def abs(x: Double) = if(x &gt;=0) x else -x
+</span><span class="line">	
+</span><span class="line">	//然后“猜”一值，这个值原先是初始值, 之后是每次迭代得到的新结果
+</span><span class="line">	def isGoodEnough(guess: Double, x: Double) = 
+</span><span class="line">		abs(guess * guess - x) &lt; precision
+</span><span class="line">
+</span><span class="line">	//这个就是迭代公式
+</span><span class="line">	def improve(guess: Double, x: Double) = (guess + x/guess) / 2
+</span><span class="line">
+</span><span class="line">	//迭代函数,迭代函数必须有返回值类型
+</span><span class="line">	def iter(guess: Double, x: Double):Double = {
+</span><span class="line">		if (isGoodEnough(guess, x)) guess
+</span><span class="line">		else iter(improve(guess, x), x)
+</span><span class="line">	}	
+</span><span class="line">	
+</span><span class="line">	iter(1, x)
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>至此，假如你刚学Scala，我相信这个例子能给一些Scala函数的初步印象，比如函数的形式，再比如函数里面嵌套函数，但这绝对不是Scala函数的全貌。要知道函数在Scala里可是first-class citizen (头等公民)，关于这点我在后续文章里会有分享。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Cando</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-31T11:20:58+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>11:20 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/scala/'>scala</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/31/scala-1/" title="Previous Post: Scala 点滴 (1)">&laquo; Scala 点滴 (1)</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/09/01/learning-how-to-learn-4/" title="Next Post: 如何学习 (4)">如何学习 (4) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/learning-how-to-learn-4/">如何学习 (4)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/31/scala-2/">Scala 点滴 (2)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 (1)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/31/learning-how-to-learn-3/">如何学习 (3)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习 (2)</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/english/index.html">  english (2) </a>
+      </li>
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/others/index.html">  others (2) </a>
+      </li>
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/learn/index.html">  learn (4) </a>
+      </li>
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (2) </a>
+      </li>
+    
+  </ul>
+</section>
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Cando -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

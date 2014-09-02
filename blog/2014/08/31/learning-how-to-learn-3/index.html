@@ -9,7 +9,8 @@
   <meta name="author" content="Cando">
 
   
-  <meta name="description" content="Long term memory Working Memory 长期记忆和工作记忆 假如你要回忆童年往事或者数学公式，你用的是人脑中负责长期记忆的long term memory；假如你想把其中一些概念联系起来解决某些问题，你要的是working memory。
+  <meta name="description" content="Long term memory Working Memory 长期记忆和工作记忆
+假如你要回忆童年往事或者数学公式，你用的是人脑中负责长期记忆的long term memory；假如你想把其中一些概念联系起来解决某些问题，你要的是working memory。
 你有时候会把一些记忆从long &hellip;">
   
 
@@ -31,6 +32,38 @@
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   <!--
 -->
 </head>
@@ -86,10 +119,9 @@
   </header>
 
 
-<div class="entry-content"><h2>Long term memory Working Memory 长期记忆和工作记忆</h2>
-
+<div class="entry-content"><h2 id="long-term-memory-working-memory-">Long term memory Working Memory 长期记忆和工作记忆</h2>
 <p>假如你要回忆童年往事或者数学公式，你用的是人脑中负责长期记忆的long term memory；假如你想把其中一些概念联系起来解决某些问题，你要的是working memory。
-你有时候会把一些记忆从long term memory取出，然后放到working memory里，这时候long term memory就和working memory发生了联系。（我觉得，就这working memory 和 long term memory的关系来说，很像计算机中内存和硬盘的关系&ndash;当信息需要长期存储的时候它被放到硬盘中；当它需要被处理的时候，把它载到内存中处理。）</p>
+你有时候会把一些记忆从long term memory取出，然后放到working memory里，这时候long term memory就和working memory发生了联系。（我觉得，就这working memory 和 long term memory的关系来说，很像计算机中内存和硬盘的关系–当信息需要长期存储的时候它被放到硬盘中；当它需要被处理的时候，把它载到内存中处理。）</p>
 
 <p>表面上来看，working memory就像一个黑盒子，但是这个盒子里面的东西是很容易模糊的，比如你要写下一串数字，你需要重复好几次才能把它记得，然后才能写下来。</p>
 
@@ -134,10 +166,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/08/29/learning-how-to-learn-2/" title="Previous Post: 如何学习(2)">&laquo; 如何学习(2)</a>
+        <a class="basic-alignment left" href="/blog/2014/08/29/learning-how-to-learn-2/" title="Previous Post: 如何学习 (2)">&laquo; 如何学习 (2)</a>
       
       
-        <a class="basic-alignment right" href="/blog/2014/08/31/scala-1/" title="Next Post: Scala 点滴 （1）">Scala 点滴 （1） &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2014/08/31/scala-1/" title="Next Post: Scala 点滴 (1)">Scala 点滴 (1) &raquo;</a>
       
     </p>
   </footer>
@@ -156,7 +188,11 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 （1）</a>
+        <a href="/blog/2014/08/31/scala-2/">Scala 点滴 (2)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 (1)</a>
       </li>
     
       <li class="post">
@@ -164,11 +200,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习(2)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-1/">如何学习 (1)</a>
+        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习 (2)</a>
       </li>
     
   </ul>
@@ -194,7 +226,7 @@
     
 	
       <li class="post">
-        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (1) </a>
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (2) </a>
       </li>
     
   </ul>

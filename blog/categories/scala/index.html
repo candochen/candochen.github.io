@@ -30,6 +30,38 @@
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   <!--
 -->
 </head>
@@ -81,7 +113,21 @@
 
 <article>
   
-<h1><a href="/blog/2014/08/31/scala-1/">Scala 点滴 （1）</a></h1>
+<h1><a href="/blog/2014/08/31/scala-2/">Scala 点滴 (2)</a></h1>
+<time datetime="2014-08-31T11:20:58+08:00" pubdate><span class='month'>Aug</span> <span class='day'>31</span> <span class='year'>2014</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/scala/'>scala</a></span>
+</footer>
+
+
+</article>
+
+
+
+<article>
+  
+<h1><a href="/blog/2014/08/31/scala-1/">Scala 点滴 (1)</a></h1>
 <time datetime="2014-08-31T11:06:48+08:00" pubdate><span class='month'>Aug</span> <span class='day'>31</span> <span class='year'>2014</span></time>
 
 <footer>
@@ -109,7 +155,11 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 （1）</a>
+        <a href="/blog/2014/08/31/scala-2/">Scala 点滴 (2)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 (1)</a>
       </li>
     
       <li class="post">
@@ -117,11 +167,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习(2)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-1/">如何学习 (1)</a>
+        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习 (2)</a>
       </li>
     
   </ul>
@@ -147,7 +193,7 @@
     
 	
       <li class="post">
-        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (1) </a>
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (2) </a>
       </li>
     
   </ul>

@@ -30,6 +30,38 @@
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   <!--
 -->
 </head>
@@ -85,15 +117,18 @@
   </header>
 
 
-<div class="entry-content"><p>刚才看邮件时候突然想起我平时老是分不清e.g. 和 i.e. 这两个缩写，所以特地网上查了一下。原来e.g. 是拉丁语exampli gratia 的缩写，意思是for example; 而i.e. 是拉丁语id est的缩写，意思是that is.</p>
+<div class="entry-content"><p>刚才看邮件时候突然想起我平时老是分不清e.g. 和 i.e. 这两个缩写，所以特地网上查了一下。原来e.g. 是拉丁语exampli gratia 的缩写，意思是for example; 而i.e. 是拉丁语id est的缩写，意思是that is. </p>
 
-<p>再者，我在有些邮件中看到有人写e.g.后面没有跟逗号 , 这就像for example不加逗号，这也是不对的。至于我们平常工作中用到的cannot, 比如This bug cannot be reproduced. 一般来说，我们不用can not. 看网上解释，两种用法都对，但是第一种比较常用，假如你想用can not，下面这两种情况可能符合：</p>
+<p>再者，我在有些邮件中看到有人写e.g.后面没有跟逗号 , 这就像for example不加逗号，这也是不对的。至于我们平常工作中用到的cannot, 比如This bug cannot be reproduced. 一般来说，我们不用can not. 看网上解释，两种用法都对，但是第一种比较常用，假如你想用can not，下面这两种情况可能符合： </p>
 
 <ul>
-<li><p>和别的词一起用，比如can not only</p></li>
-<li><p>表示强调，比如 No, you can not wash the dog in the Maytag.</p></li>
+  <li>
+    <p>和别的词一起用，比如can not only</p>
+  </li>
+  <li>
+    <p>表示强调，比如 No, you can not wash the dog in the Maytag.  </p>
+  </li>
 </ul>
-
 
 <p>讲到这里，我又突然想起了，有次我开会时候的窘迫。有人跟客户电话会议，在我介绍完自己之后，老外突然来了句How are you? 我当时就懵了，心想，这时不是应该说Nice to meet you了吗？ 于是，我条件反射地说了, I am fine, and you. 于是客套来客套来，客套去。</p>
 
@@ -164,7 +199,11 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 （1）</a>
+        <a href="/blog/2014/08/31/scala-2/">Scala 点滴 (2)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 (1)</a>
       </li>
     
       <li class="post">
@@ -172,11 +211,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习(2)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-1/">如何学习 (1)</a>
+        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习 (2)</a>
       </li>
     
   </ul>
@@ -202,7 +237,7 @@
     
 	
       <li class="post">
-        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (1) </a>
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (2) </a>
       </li>
     
   </ul>

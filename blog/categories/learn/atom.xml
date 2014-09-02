@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Learn | 观察 记录 思考]]></title>
   <link href="http://candochen.github.io/blog/categories/learn/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2014-09-01T10:47:46+08:00</updated>
+  <updated>2014-09-02T20:48:01+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -18,17 +18,21 @@
     <link href="http://candochen.github.io/blog/2014/09/01/learning-how-to-learn-4/"/>
     <updated>2014-09-01T09:26:39+08:00</updated>
     <id>http://candochen.github.io/blog/2014/09/01/learning-how-to-learn-4</id>
-    <content type="html"><![CDATA[<h2>睡眠很重要</h2>
+    <content type="html"><![CDATA[<h2 id="section">睡眠很重要</h2>
 
 <p>你在清醒中学习的时候你的大脑会分泌出毒素。那你的大脑是如何排出这些毒素的呢？答案就是：睡觉。</p>
 
 <p>当你睡觉的时候，你的脑细胞就会收缩</p>
 
-<blockquote><p>Turns out that when you sleep, your brain cells shrink.</p></blockquote>
+<blockquote>
+  <p>Turns out that when you sleep, your brain cells shrink.</p>
+</blockquote>
 
 <p>因此细胞之间的空隙就会增大。这就像是打开了一个水龙头，流体流过大脑细胞间隙的时候，也就把毒素给排出去了。</p>
 
-<blockquote><p>Fluid can flow past these cells and wash the toxins out.</p></blockquote>
+<blockquote>
+  <p>Fluid can flow past these cells and wash the toxins out.</p>
+</blockquote>
 
 <p>有时候你可能会觉得睡觉挺浪费时间的，但是这是有回报的：你的大脑更加干净和健康。</p>
 
@@ -38,13 +42,16 @@
 
 <p>充足的睡眠除了对你的健康有益外，对你的学习也大有裨益。</p>
 
-<blockquote><p>Sleep has also been shown to make a remarkable difference in your ability to figure out difficult problems and to understand what you&rsquo;re trying to learn.</p></blockquote>
+<blockquote>
+  <p>Sleep has also been shown to make a remarkable difference in your ability to figure out difficult problems and to understand what you’re trying to learn.</p>
+</blockquote>
 
 <p>在你睡觉的时候，负责你意识清醒的大脑前额皮质会松弛下来，这给激活大脑其他的区域创造了机会。于是这些在你睡觉的时候依然工作的大脑各个区域组成解决你学习任务的神经系统。</p>
 
 <p>在你打盹或者睡觉之前，如果你集中精力思考一个问题，你可能会梦到你所思考的问题。而梦到你所思考的问题还会增加你理解问题的能力。</p>
 
 <p>所以充足的睡眠是你学习的一部分，不要再觉得睡觉浪费时间了。</p>
+
 ]]></content>
   </entry>
   
@@ -53,10 +60,9 @@
     <link href="http://candochen.github.io/blog/2014/08/31/learning-how-to-learn-3/"/>
     <updated>2014-08-31T10:32:53+08:00</updated>
     <id>http://candochen.github.io/blog/2014/08/31/learning-how-to-learn-3</id>
-    <content type="html"><![CDATA[<h2>Long term memory Working Memory 长期记忆和工作记忆</h2>
-
+    <content type="html"><![CDATA[<h2 id="long-term-memory-working-memory-">Long term memory Working Memory 长期记忆和工作记忆</h2>
 <p>假如你要回忆童年往事或者数学公式，你用的是人脑中负责长期记忆的long term memory；假如你想把其中一些概念联系起来解决某些问题，你要的是working memory。
-你有时候会把一些记忆从long term memory取出，然后放到working memory里，这时候long term memory就和working memory发生了联系。（我觉得，就这working memory 和 long term memory的关系来说，很像计算机中内存和硬盘的关系&ndash;当信息需要长期存储的时候它被放到硬盘中；当它需要被处理的时候，把它载到内存中处理。）</p>
+你有时候会把一些记忆从long term memory取出，然后放到working memory里，这时候long term memory就和working memory发生了联系。（我觉得，就这working memory 和 long term memory的关系来说，很像计算机中内存和硬盘的关系–当信息需要长期存储的时候它被放到硬盘中；当它需要被处理的时候，把它载到内存中处理。）</p>
 
 <p>表面上来看，working memory就像一个黑盒子，但是这个盒子里面的东西是很容易模糊的，比如你要写下一串数字，你需要重复好几次才能把它记得，然后才能写下来。</p>
 
@@ -69,13 +75,13 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[如何学习(2)]]></title>
+    <title type="html"><![CDATA[如何学习 (2)]]></title>
     <link href="http://candochen.github.io/blog/2014/08/29/learning-how-to-learn-2/"/>
     <updated>2014-08-29T20:23:11+08:00</updated>
     <id>http://candochen.github.io/blog/2014/08/29/learning-how-to-learn-2</id>
-    <content type="html"><![CDATA[<h1>Practice makes permanent</h1>
+    <content type="html"><![CDATA[<h1 id="practice-makes-permanent">Practice makes permanent</h1>
 
-<p>Bard 老师从16岁才开始真正地学习数学，在那之前她非常害怕和痛恨学习数学和科学。她没想到她后来回从事工程(engineering)的工作。刚开始的时候，她觉得数学太难了，在她看来数学对其他同学来说是那么容易&ndash;他们学得又快又准。在学习过程中，她有时候会放下学习，到外面的世界去逛逛，回来之后再继续学。她说，她不是自然就学会数学的，而是一步一步、循序渐进地学习得来的。</p>
+<p>Bard 老师从16岁才开始真正地学习数学，在那之前她非常害怕和痛恨学习数学和科学。她没想到她后来回从事工程(engineering)的工作。刚开始的时候，她觉得数学太难了，在她看来数学对其他同学来说是那么容易–他们学得又快又准。在学习过程中，她有时候会放下学习，到外面的世界去逛逛，回来之后再继续学。她说，她不是自然就学会数学的，而是一步一步、循序渐进地学习得来的。</p>
 
 <p>数学是抽象的，它不容易掌握，不像具体的事物，比如一头奶牛，你知道cow是奶牛的意思，你可以对着奶牛指着它，看着它学习cow。 但是数学通常情况下没有类似的东西让你比较，让你联系。当然你可以说，类似“爱”，“希望”这些词也是抽象的，但是通常这些词可以从人的情感中找到联系，但是数学概念不行。</p>
 
@@ -90,22 +96,23 @@
     <id>http://candochen.github.io/blog/2014/08/29/learning-how-to-learn-1</id>
     <content type="html"><![CDATA[<p>Learning How to Learn 是我在Coursera上的一门由UC San Diego的Dr. Terrence Sejnowski, Dr. Barbara Oakley 主讲的课（你如果也喜欢这么课的话，请到www.coursera.org 搜Learning How to Learn），它是主要讲如何学习的。上了两周之后，我觉得这门课非常有用，甚至对我以后的人生都有用，所以我要把一些内容做下记录。</p>
 
-<h1>Procrastination拖延症</h1>
+<h1 id="procrastination">Procrastination拖延症</h1>
 
-<p>每个人都有或多或少都有拖延症，但是有些人严重些。当你要解决一个你不喜欢的问题时，比如做数学题， 这时候你大脑中关于痛苦的区域就会被激活，与此同时，你的大脑自然而然地会激活另外一个功能&ndash;寻找舒适，于是你的大脑把注意力转向让你感到舒服的事情中去，比如做简单的事情，或者上网聊天，这似乎让你感到些快乐，但是别忘了这快乐是短暂的。所以，当你遇到困难任务是，你的大脑是这样反应的:
-Unhappy felling ->You funnel attention onto a more pleasant task -> Feel happy(temporarily)</p>
+<p>每个人都有或多或少都有拖延症，但是有些人严重些。当你要解决一个你不喜欢的问题时，比如做数学题， 这时候你大脑中关于痛苦的区域就会被激活，与此同时，你的大脑自然而然地会激活另外一个功能–寻找舒适，于是你的大脑把注意力转向让你感到舒服的事情中去，比如做简单的事情，或者上网聊天，这似乎让你感到些快乐，但是别忘了这快乐是短暂的。所以，当你遇到困难任务是，你的大脑是这样反应的:
+Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel happy(temporarily)</p>
 
 <p>如何解决这个问题呢？我们可以借助一个工具，Pomodoro （番茄工作法），具体做法是：</p>
 
-<blockquote><ol>
-<li>25 minutes</li>
-<li>no interruptions</li>
-<li>focus</li>
-<li>reward</li>
-</ol>
+<blockquote>
+  <ol>
+    <li>25 minutes</li>
+    <li>no interruptions</li>
+    <li>focus</li>
+    <li>reward</li>
+  </ol>
 </blockquote>
 
-<p>你一定要给自己一个不受中断的25分钟，在这25分钟内你要集中精力解决问题，当问题解决完成之后别忘了给自己一个奖励，比如上网，听歌&hellip; 时间是5分钟，然后开始下个25分钟&hellip;</p>
+<p>你一定要给自己一个不受中断的25分钟，在这25分钟内你要集中精力解决问题，当问题解决完成之后别忘了给自己一个奖励，比如上网，听歌… 时间是5分钟，然后开始下个25分钟…</p>
 ]]></content>
   </entry>
   

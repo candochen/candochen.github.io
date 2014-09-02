@@ -30,6 +30,38 @@
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   <!--
 -->
 </head>
@@ -85,17 +117,21 @@
   </header>
 
 
-<div class="entry-content"><h2>睡眠很重要</h2>
+<div class="entry-content"><h2 id="section">睡眠很重要</h2>
 
 <p>你在清醒中学习的时候你的大脑会分泌出毒素。那你的大脑是如何排出这些毒素的呢？答案就是：睡觉。</p>
 
 <p>当你睡觉的时候，你的脑细胞就会收缩</p>
 
-<blockquote><p>Turns out that when you sleep, your brain cells shrink.</p></blockquote>
+<blockquote>
+  <p>Turns out that when you sleep, your brain cells shrink.</p>
+</blockquote>
 
 <p>因此细胞之间的空隙就会增大。这就像是打开了一个水龙头，流体流过大脑细胞间隙的时候，也就把毒素给排出去了。</p>
 
-<blockquote><p>Fluid can flow past these cells and wash the toxins out.</p></blockquote>
+<blockquote>
+  <p>Fluid can flow past these cells and wash the toxins out.</p>
+</blockquote>
 
 <p>有时候你可能会觉得睡觉挺浪费时间的，但是这是有回报的：你的大脑更加干净和健康。</p>
 
@@ -105,13 +141,16 @@
 
 <p>充足的睡眠除了对你的健康有益外，对你的学习也大有裨益。</p>
 
-<blockquote><p>Sleep has also been shown to make a remarkable difference in your ability to figure out difficult problems and to understand what you&rsquo;re trying to learn.</p></blockquote>
+<blockquote>
+  <p>Sleep has also been shown to make a remarkable difference in your ability to figure out difficult problems and to understand what you’re trying to learn.</p>
+</blockquote>
 
 <p>在你睡觉的时候，负责你意识清醒的大脑前额皮质会松弛下来，这给激活大脑其他的区域创造了机会。于是这些在你睡觉的时候依然工作的大脑各个区域组成解决你学习任务的神经系统。</p>
 
 <p>在你打盹或者睡觉之前，如果你集中精力思考一个问题，你可能会梦到你所思考的问题。而梦到你所思考的问题还会增加你理解问题的能力。</p>
 
 <p>所以充足的睡眠是你学习的一部分，不要再觉得睡觉浪费时间了。</p>
+
 </div>
 
 
@@ -148,7 +187,7 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/08/31/scala-1/" title="Previous Post: Scala 点滴 （1）">&laquo; Scala 点滴 （1）</a>
+        <a class="basic-alignment left" href="/blog/2014/08/31/scala-2/" title="Previous Post: Scala 点滴 (2)">&laquo; Scala 点滴 (2)</a>
       
       
     </p>
@@ -168,7 +207,11 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 （1）</a>
+        <a href="/blog/2014/08/31/scala-2/">Scala 点滴 (2)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 (1)</a>
       </li>
     
       <li class="post">
@@ -176,11 +219,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习(2)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-1/">如何学习 (1)</a>
+        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习 (2)</a>
       </li>
     
   </ul>
@@ -206,7 +245,7 @@
     
 	
       <li class="post">
-        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (1) </a>
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (2) </a>
       </li>
     
   </ul>
