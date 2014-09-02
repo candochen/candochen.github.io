@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "如何学习(2)"
+title: "如何学习 (2)"
 date: 2014-08-29 20:23:11 +0800
 comments: true
 categories: Learn

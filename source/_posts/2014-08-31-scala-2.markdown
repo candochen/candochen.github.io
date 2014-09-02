@@ -8,15 +8,108 @@ categories: Scala
 
 ## Scala函数之初体验 ##
 
-下面这个例子是Scala发明者Martin Odersky在Coursera上授课用的例子，这个例子在SICP(Structure and Interpretation of Computer Programs, 计算机程序的构造和解释)也有。我这里重述这个例子的原因是这个例子即包含数学思想又包含Scala语法，它即实用又有趣。
+下面这个例子是Scala发明者Martin Odersky在Coursera上授课用的例子，这个例子在SICP(Structure and Interpretation of Computer Programs, 计算机程序的构造和解释)一书中也有。我这里重述这个例子的原因是这个例子即包含数学思想又包含Scala语法，它即实用又有趣。
 
 它就是，
-### 通过牛顿法求根号2的近似值 ###
+
+### 通过牛顿法求$\sqrt{2}$的近似值 ###
 
 从这篇维基百科[牛顿法介绍](http://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF%E6%B3%95) 我们可以知道，牛顿法是一种迭代方法。所谓迭代的意思是上一次计算的结果都对本次计算起作用，换句话说，上次计算得出的结果可以作为本次计算的输入。
 
-本文主要讲述如果用Scala实现牛顿法，所以牛顿法的分析过程就此略过，而直接给出公式：{%img /images/2014/09/newtonformula.png%}
+本文主要讲述如果用Scala实现牛顿法，所以牛顿法的分析过程就此略过，而直接给出公式：
 
-对于本例, \sqrt{2} f(x) = x^2 = 2
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_{n})}$$ 
 
-$$\exp(-\frac{x^2}{2})$$
+
+
+$\sqrt{2}$就是$f(x) = x^2 - 2 = 0$的根，根据上面的公式通过求得
+
+$$x_{n+1} = \frac{x_n + \frac{2}{x_n}}{2}$$
+
+现在只要给出一个初始值$x_0$就可以通过上面的迭代公式求出结果。因为$f(x) = x^2 - 2 = 0$，所以$x^2=2$，易知1<x<2。因此，我们可以给出一个初始值$x_0 = 1 $ 。
+
+一切准备工作就绪，我可以编程了...
+
+
+{% codeblock %}
+	
+//首先我需要一个求绝对值的函数（虽然Scala的标准库中有这个函数，这里为了描述的完整性，先不考虑它)
+def abs(x: Double) = if(x >=0) x else -x
+	
+//然后“猜”一值，这个值原先是初始值, 之后是每次迭代得到的新结果
+def isGoodEnough(guess: Double) = 
+	abs(guess * guess - 2) < 0.000001
+
+//这个就是迭代公式
+def improve(guess: Double) = (guess + 2/guess) / 2
+
+//迭代函数,迭代函数必须有返回值类型
+def iter(guess: Double):Double = {
+	if (isGoodEnough(guess)) guess
+	else iter(improve(guess))
+}
+
+//求根函数, 传入迭代的初始值 1
+def sqrt2 = iter(1)     
+    
+{% endcodeblock %}
+
+
+学过编程的人都会觉得上面的程序好傻。首先，这个sqrt2只能够求$\sqrt{2}$的值，它不能求$\sqrt{3} , \sqrt{5} ...$, 其次isGoodEnough函数的精度不能写死了，总之不够灵活(flexible)。
+
+所以，我进行第一次重构...
+
+{% codeblock 第一次重构 %}
+
+val precision = 0.000001
+
+//首先我需要一个求绝对值的函数（虽然Scala的标准库中有这个函数，这里为了描述的完整性，先不考虑它)
+def abs(x: Double) = if(x >=0) x else -x
+	
+//然后“猜”一值，这个值原先是初始值, 之后是每次迭代得到的新结果
+def isGoodEnough(guess: Double, x: Double) = 
+	abs(guess * guess - x) < precision
+
+//这个就是迭代公式
+def improve(guess: Double, x: Double) = (guess + x/guess) / 2
+
+//迭代函数,迭代函数必须有返回值类型
+def iter(guess: Double, x: Double):Double = {
+	if (isGoodEnough(guess, x)) guess
+	else iter(improve(guess, x), x)
+}
+
+//求根函数, 传入迭代的初始值 1
+def sqrt(x: Double) = iter(1, x)  
+{% endcodeblock %}
+
+
+经过一次重构，程序比第一次好些了，但是还有个问题：因为isGoodEnough, improve, iter这些函数都是sqrt函数计算的一部分，能不能把它们封装到函数sqrt里面呢？ 答案是可以的，这也正是Scala的一个优点（相对于Java）。
+
+{% codeblock 第二次重构 %}
+
+//求根函数, 传入迭代的初始值 1
+def sqrt(x: Double)  = {
+	val precision = 0.000001
+	
+	//首先我需要一个求绝对值的函数（虽然Scala的标准库中有这个函数，这里为了描述的完整性，先不考虑它)
+	def abs(x: Double) = if(x >=0) x else -x
+	
+	//然后“猜”一值，这个值原先是初始值, 之后是每次迭代得到的新结果
+	def isGoodEnough(guess: Double, x: Double) = 
+		abs(guess * guess - x) < precision
+
+	//这个就是迭代公式
+	def improve(guess: Double, x: Double) = (guess + x/guess) / 2
+
+	//迭代函数,迭代函数必须有返回值类型
+	def iter(guess: Double, x: Double):Double = {
+		if (isGoodEnough(guess, x)) guess
+		else iter(improve(guess, x), x)
+	}	
+	
+	iter(1, x)
+}   
+{% endcodeblock %}
+
+至此，假如你刚学Scala，我相信这个例子能给一些Scala函数的初步印象，比如函数的形式，再比如函数里面嵌套函数，但这绝对不是Scala函数的全貌。要知道函数在Scala里可是first-class citizen (头等公民)，关于这点我在后续文章里会有分享。
