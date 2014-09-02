@@ -1,0 +1,22 @@
+---
+layout: post
+title: "Scala 点滴 (2)"
+date: 2014-08-31 11:20:58 +0800
+comments: true
+categories: Scala
+---
+
+## Scala函数之初体验 ##
+
+下面这个例子是Scala发明者Martin Odersky在Coursera上授课用的例子，这个例子在SICP(Structure and Interpretation of Computer Programs, 计算机程序的构造和解释)也有。我这里重述这个例子的原因是这个例子即包含数学思想又包含Scala语法，它即实用又有趣。
+
+它就是，
+### 通过牛顿法求根号2的近似值 ###
+
+从这篇维基百科[牛顿法介绍](http://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF%E6%B3%95) 我们可以知道，牛顿法是一种迭代方法。所谓迭代的意思是上一次计算的结果都对本次计算起作用，换句话说，上次计算得出的结果可以作为本次计算的输入。
+
+本文主要讲述如果用Scala实现牛顿法，所以牛顿法的分析过程就此略过，而直接给出公式：{%img /images/2014/09/newtonformula.png%}
+
+对于本例, \sqrt{2} f(x) = x^2 = 2
+
+$$\exp(-\frac{x^2}{2})$$
