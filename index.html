@@ -9,7 +9,7 @@
   <meta name="author" content="Cando">
 
   
-  <meta name="description" content="睡眠很重要 你在清醒中学习的时候你的大脑会分泌出毒素。那你的大脑是如何排出这些毒素的呢？答案就是：睡觉。 当你睡觉的时候，你的脑细胞就会收缩 Turns out that when you sleep, your brain cells shrink. 因此细胞之间的空隙就会增大。 &hellip;">
+  <meta name="description" content="隐式参数和隐式类型转化 我想通过一个快速排序的例子，分享我对Scala中隐式参数和隐式类型转换的理解。相对于指令型语言，用Scala实现一个快速排序即简单又容易理解（代码容易阅读）。在开始之前，我想简单描述一下快速排序的思想。 假设我们有个无序的整数型列表，为了简单起见，它仅仅包含的5个数字分别是 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -98,6 +98,351 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/03/scala-3/">Scala 点滴 (3)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-03T19:06:04+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>7:06 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3 id="section">隐式参数和隐式类型转化</h3>
+
+<p>我想通过一个快速排序的例子，分享我对Scala中隐式参数和隐式类型转换的理解。相对于指令型语言，用Scala实现一个快速排序即简单又容易理解（代码容易阅读）。在开始之前，我想简单描述一下快速排序的思想。</p>
+
+<p>假设我们有个无序的整数型列表，为了简单起见，它仅仅包含的5个数字分别是: 3, 4, 5, 2, 1。为了体现每个数字在排序过程中位置的变化，我把每个数字都加上下标，比如这样$3_1, 5_2, 4_3, 2_4, 1_5$。</p>
+
+<p>让我们来看看每次排序都发生什么样的变化。</p>
+
+<p>初始状态下
+<script type="math/tex">3_1, 5_2, 4_3, 2_4, 1_5</script></p>
+
+<p>我们现在随便选择一个数，在本例中我们选择第一个数3，然后把小于或者等于这个数的所有的数放到这个数的左边，把大于这个数的所有的数放到这个数的右边。
+于是这个列表变成，
+<script type="math/tex">2_1, 1_2, 3_3, 5_4, 4_5</script></p>
+
+<p>可以看出我们选择的这个数3处于在最终应该处的位置。在上一步中，我们实际做了3件事</p>
+
+<ol>
+  <li>选一个数 （这个数叫Pivot）</li>
+  <li>把小于或者等于Pivot的数放到Pivot的左边，把大于Pivot的数放到Pivot的右边 </li>
+  <li>最后把这3部分合并，为了看清楚一点，我把这3部分用括号括起来</li>
+</ol>
+
+<script type="math/tex; mode=display">(2_1, 1_2) (3_3) (5_4, 4_5)</script>
+
+<p>现在可以看出不论Pivot左边还是右边都是没有排序的，所以我们只要分别针对左边列表和右边列表重复进行以上步骤就可以了，显然这是个递归过程。（上述算法在最优条件下的时间复杂度是O(nlgn), 在最坏情况下的时间复杂度是$O(n^2)$, 可以通过随机化算法随机选择Pivot,这时候它的时间复杂度是O(nlgn), 关于这点我再这里就不多说了）</p>
+
+<p>一切准备就绪，来看看Scala是如何简单实现快速排序的吧</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>最初的快速排序函数 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">def quickSort(xs: List[Int]): List[Int] = xs match {
+</span><span class="line"> case Nil =&gt; Nil
+</span><span class="line"> case x::xs =&gt; {
+</span><span class="line">	val left = xs.filter(_&lt;=x)
+</span><span class="line">	val right = xs.filter(_&gt;x)
+</span><span class="line">	quickSort(left) ::: List(x) ::: quickSort(right)
+</span><span class="line"> }
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>上述程序可以对Int型对象进行排序，能不能让它对任意的对象都可以排序呢？仔细观察一下，可以发现不同对象的比较运算符可能不一样，对于Int的对象，我们能用运算符&gt;= 或&lt; 来比较两个Int对象的大小，但是对于其他对象比较的运算符就不确定了。为了使得函数能够比较更多类型，可以增加一个比较函数作为参数传进去，于是函数变成这样</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>重构一 加上泛型和比较函数 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">def quickSort[T](xs: List[Int])(lt: (T, T)=&gt; Boolean): List[T] = xs match {
+</span><span class="line"> case Nil =&gt; Nil
+</span><span class="line"> case x::xs =&gt; {
+</span><span class="line">  val left = xs.filter(lt(_,x))
+</span><span class="line">  val right = xs.filter(!lt(_,x))
+</span><span class="line">  quickSort(left)(lt) ::: List(x) ::: quickSort(right)(lt)
+</span><span class="line"> }
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">//测试一下
+</span><span class="line">def strLt(s1 : String, s2: String) = if (s1.compareTo(s2) &lt;=0) true else false
+</span><span class="line">
+</span><span class="line">val testList = List("scala","is", "fantastic")
+</span><span class="line">
+</span><span class="line">quickSort(testList)(strLt)</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>重构之后, quickSort函数能够对包含任何对象的列表进行排序。但是改进仍在继续，我们可以通过定义隐式参数把第二参数也去掉。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>重构二 加上隐式参数 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">def quickSort[T](xs: List[Int])(implicit lt: (T, T)=&gt; Boolean): List[T] = xs match {
+</span><span class="line"> case Nil =&gt; Nil
+</span><span class="line"> case x::xs =&gt; {
+</span><span class="line">  val left = xs.filter(lt(_,x))
+</span><span class="line">  val right = xs.filter(!lt(_,x))
+</span><span class="line">  quickSort(left)(lt) ::: List(x) ::: quickSort(right)(lt)
+</span><span class="line"> }
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">//测试一下
+</span><span class="line">implicit def strLt(s1 : String, s2: String) = if (s1.compareTo(s2) &lt;=0) true else false
+</span><span class="line">
+</span><span class="line">val testList = List("scala","is", "fantastic")
+</span><span class="line">
+</span><span class="line">quickSort(testList)</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>很神奇，对吧？ 那么隐式参数是怎么工作的呢？这要归功于Scala强大的编译器。在Scala中，隐式（implicit）意味着一个值（函数也是值-value）能够自动地传入函数中，或者一个类型的对象能够自动转化成另外一个类型的对象。具体来说implicit在Scala中有下面4种含义。</p>
+
+<h3 id="section-1">隐式转化</h3>
+
+<p>简单来说，如果一个函数调用一个类型为c的对象o的方法m, 这时候发现这个o对象没有方法m, 那么Scala编译器会找到一个隐式类型转化函数，把对象o从c变成另外一个有m方法的类型的对象。</p>
+
+<p>比如 “abc”.map(_.toInt), 我们知道String类型是没有map方法的，这时Scala编译器从scala.Predef拿到适合的隐式函数(implicit def augmentString)，把”abc”从类型java.lang.String变成StringOps</p>
+
+<p>于是，我们也可以自己定义隐式转化。比如下面程序中convertIntToOps把Int型对象转成IntOps型对象。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">class IntOps(x: Int){
+</span><span class="line"> def sayHi = "Hi, I am # " + x
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">implicit def convertIntToOps(x: Int) = new IntOps(x)
+</span><span class="line">println(1.sayHi)
+</span><span class="line">
+</span><span class="line">//以上程序打印出 Hi, I am # 1</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>可以看出隐式类型转化为Scala提供了类似动态语言的Meta-programming的能力。</p>
+
+<h3 id="section-2">隐式参数</h3>
+
+<p>隐式参数在 重构二 加上隐式参数 中已经说过了，这里略去重复描述。</p>
+
+<h3 id="view-bound">View Bound</h3>
+
+<p>在很多情况下，隐式参数和隐式类型转化被放在一起用，例如下面的例子：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">class Container[A](implicit conv: A =&gt; Int){
+</span><span class="line"> def addIt(x: A) = 123 + x
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">implicit def strToInt(x: String) = x.toInt
+</span><span class="line">
+</span><span class="line">(new Container[String]).addIt("123")</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>更简洁的形式是Scala提供的语法糖[A &lt;% Int], 它表示有某个隐式函数把A转化成了Int，你可以像使用Int一样使用A。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>语法糖形式 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">class Container[A&lt;%Int]{
+</span><span class="line"> def addIt(x: A) = 123 + x
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">implicit def strToInt(x: String) = x.toInt
+</span><span class="line">
+</span><span class="line">(new Container[String]).addIt("123")</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们能够观察到的东西叫View，所以View Bound的意思是在某种特定的情况下(Bound: 范围)， X 可以被当做 Y使用。在语法糖形式中， A&lt;%Int, 表示类型A会被转化成Int用。</p>
+
+<h3 id="context-bound">Context Bound</h3>
+
+<p>implicit的另外一个用处是叫做Context Bound。Context Bound和View Bound有点不同，View Bound是把X当做Y用， 所以需要一个隐式的转化函数，就像上面的implicit def strToInt(x: String) = x.toInt。而Context Bound的意思是上下文(Context)条件下，X有一个Y。在下面代码一中，我定义一个Addable特征，同时有两个实现IntAdd和StringAdd。我把他们声明为implicit object, 目的是Container对象可以引用他们。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>代码一 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">trait Addable[T]{
+</span><span class="line"> def add(x: T, y: T): T
+</span><span class="line">}
+</span><span class="line">  
+</span><span class="line">implicit object IntAdd extends Addable[Int]{
+</span><span class="line"> def add(x: Int, y: Int): Int = x + y
+</span><span class="line">}
+</span><span class="line">  
+</span><span class="line">  
+</span><span class="line">implicit object StringAdd extends Addable[String]{
+</span><span class="line"> def add(x: String, y: String): String = x + y
+</span><span class="line">}
+</span><span class="line">  
+</span><span class="line">class Container[A](implicit a: Addable[A]){
+</span><span class="line"> def add(x:A, y: A) = a.add(x, y)
+</span><span class="line">}
+</span><span class="line">  
+</span><span class="line">(new Container[Int]).add(1, 2)                  
+</span><span class="line">(new Container[String]).add("a", "b")</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>更简洁的形式是Scala提供的语法糖[A: Addable], 它表示在你的函数或者对象（看你是把它定义在函数上还是类上）里有个Addable的对象供你使用。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>把Container写成语法糖形式</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">//定义在类上
+</span><span class="line">class Container[A: Addable]{
+</span><span class="line">  	def add(x:A, y: A) = implicitly[Addable[A]].add(x, y)
+</span><span class="line">}
+</span><span class="line">  
+</span><span class="line">(new Container[Int]).add(1, 2)
+</span><span class="line">(new Container[String]).add("a", "b")
+</span><span class="line">
+</span><span class="line">//定义在函数上
+</span><span class="line">def add[A: Addable](x: A, y: A) = implicitly[Addable[A]].add(x, y)
+</span><span class="line">add("abc", "def")</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>从上面的代码我们可以看到Container可以使用上下文中的Addable对象，也就是Container有一个Addable对象，就是我上面说的X has-a Y。</p>
+
+<p>除了可以声明implicit object，我们还可以声明implicit class。通过implicit class，我们可以很容易地实现GOF的Adapter模式。在下面代码中，编译器“自动”地把LegacyUserService转化成UserServiceAdapter</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>用隐式类型实现一个Adapter 模式</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">trait UserService{
+</span><span class="line"> def getUserRole(userId: String) : String
+</span><span class="line">}
+</span><span class="line">  
+</span><span class="line">  
+</span><span class="line">class LegacyUserService{
+</span><span class="line"> def getUserRoleByUserId(userId: String) : String = {
+</span><span class="line">	userId.toUpperCase()(0) + " Role"
+</span><span class="line"> }
+</span><span class="line">}
+</span><span class="line">  
+</span><span class="line">  
+</span><span class="line">implicit class UserServiceAdapter(legacyUserService : LegacyUserService) extends UserService{
+</span><span class="line"> def getUserRole(userId: String) = {
+</span><span class="line">	legacyUserService.getUserRoleByUserId(userId)
+</span><span class="line"> }
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line"> 
+</span><span class="line">val userService: UserService = new LegacyUserService()
+</span><span class="line">                                                   	
+</span><span class="line">println(userService.getUserRole("alex"))</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这篇文章的信息量有点大，这和我之前想象的不同，它也花费了我将近一个星期的下班后时间。在边写边思考的过程中，我学到了很多东西。</p>
+
+<h4 id="section-3">参考资料</h4>
+
+<p><a href="">http://docs.scala-lang.org/tutorials/FAQ/finding-implicits.html</a></p>
+
+<p><a href="">http://www.scala-lang.org/api/current/index.html#scala.math.Ordering</a></p>
+
+<p><a href="">http://www.scala-lang.org/docu/files/ScalaByExample.pdf</a></p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -659,61 +1004,9 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/18/cannot-vs-can-not/">Cannot vs Can Not</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-18T19:09:22+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:09 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>刚才看邮件时候突然想起我平时老是分不清e.g. 和 i.e. 这两个缩写，所以特地网上查了一下。原来e.g. 是拉丁语exampli gratia 的缩写，意思是for example; 而i.e. 是拉丁语id est的缩写，意思是that is. </p>
-
-<p>再者，我在有些邮件中看到有人写e.g.后面没有跟逗号 , 这就像for example不加逗号，这也是不对的。至于我们平常工作中用到的cannot, 比如This bug cannot be reproduced. 一般来说，我们不用can not. 看网上解释，两种用法都对，但是第一种比较常用，假如你想用can not，下面这两种情况可能符合： </p>
-
-<ul>
-  <li>
-    <p>和别的词一起用，比如can not only</p>
-  </li>
-  <li>
-    <p>表示强调，比如 No, you can not wash the dog in the Maytag.  </p>
-  </li>
-</ul>
-
-<p>讲到这里，我又突然想起了，有次我开会时候的窘迫。有人跟客户电话会议，在我介绍完自己之后，老外突然来了句How are you? 我当时就懵了，心想，这时不是应该说Nice to meet you了吗？ 于是，我条件反射地说了, I am fine, and you. 于是客套来客套来，客套去。</p>
-
-<p>有个老外程序员说，你们中国人真有趣，我说How are you的时候，你们一定会说Fine, and you，就好像一个数学函数一样。</p>
-
-<p>但是，我们真的不知道怎么说了呀，老师又没教，也没有专门培训过。所以，跟不同的客户电话会议之前，我老是神经紧张，生怕说错了什么话，导致让对方觉得我不够礼貌。幸好说native english的老外们一般都比较nice，有时候会很开心地跟你聊，感觉就像是一个外国人说普通话，说错了我们也觉得没什么。</p>
-
-<p>呵呵。</p>
-
-<p>参考链接</p>
-
-<p><a href="http://public.wsu.edu/~brians/errors/e.g.html">http://public.wsu.edu/~brians/errors/e.g.html</a></p>
-
-<p><a href="http://www.oxforddictionaries.com/words/cannot-or-can-not">http://www.oxforddictionaries.com/words/cannot-or-can-not</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/posts/2">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -724,6 +1017,10 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/03/scala-3/">Scala 点滴 (3)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/01/learning-how-to-learn-4/">如何学习 (4)</a>
@@ -739,10 +1036,6 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
     
       <li class="post">
         <a href="/blog/2014/08/31/learning-how-to-learn-3/">如何学习 (3)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/29/learning-how-to-learn-2/">如何学习 (2)</a>
       </li>
     
   </ul>
@@ -768,7 +1061,7 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
     
 	
       <li class="post">
-        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (2) </a>
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (3) </a>
       </li>
     
   </ul>
