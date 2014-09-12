@@ -95,6 +95,11 @@ default_asides: [asides/recent_posts.html, custom/asides/category_list.html]
 #disqus_short_name:
 #disqus_show_comment_count: false
 
+# Dushuo Comments
+duoshuo_comments: true
+duoshuo_name: candochen
+duoshuo_short_name: cando
+
 # Google Analytics
 #google_analytics_tracking_id:
 

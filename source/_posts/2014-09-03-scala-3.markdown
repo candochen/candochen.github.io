@@ -1,0 +1,249 @@
+---
+layout: post
+title: "Scala 点滴 (3)"
+date: 2014-09-03 19:06:04 +0800
+comments: true
+categories: Scala
+---
+
+
+### 隐式参数和隐式类型转化 ###
+
+我想通过一个快速排序的例子，分享我对Scala中隐式参数和隐式类型转换的理解。相对于指令型语言，用Scala实现一个快速排序即简单又容易理解（代码容易阅读）。在开始之前，我想简单描述一下快速排序的思想。
+
+假设我们有个无序的整数型列表，为了简单起见，它仅仅包含的5个数字分别是: 3, 4, 5, 2, 1。为了体现每个数字在排序过程中位置的变化，我把每个数字都加上下标，比如这样$3_1, 5_2, 4_3, 2_4, 1_5$。
+
+让我们来看看每次排序都发生什么样的变化。
+
+初始状态下
+$$3_1, 5_2, 4_3, 2_4, 1_5$$
+
+我们现在随便选择一个数，在本例中我们选择第一个数3，然后把小于或者等于这个数的所有的数放到这个数的左边，把大于这个数的所有的数放到这个数的右边。
+于是这个列表变成，
+$$2_1, 1_2, 3_3, 5_4, 4_5$$
+
+可以看出我们选择的这个数3处于在最终应该处的位置。在上一步中，我们实际做了3件事
+
+1. 选一个数 （这个数叫Pivot）
+2. 把小于或者等于Pivot的数放到Pivot的左边，把大于Pivot的数放到Pivot的右边 
+3. 最后把这3部分合并，为了看清楚一点，我把这3部分用括号括起来
+
+$$(2_1, 1_2) (3_3) (5_4, 4_5)$$
+
+
+现在可以看出不论Pivot左边还是右边都是没有排序的，所以我们只要分别针对左边列表和右边列表重复进行以上步骤就可以了，显然这是个递归过程。（上述算法在最优条件下的时间复杂度是O(nlgn), 在最坏情况下的时间复杂度是$O(n^2)$, 可以通过随机化算法随机选择Pivot,这时候它的时间复杂度是O(nlgn), 关于这点我再这里就不多说了）
+
+一切准备就绪，来看看Scala是如何简单实现快速排序的吧
+
+
+{% codeblock 最初的快速排序函数 %}
+
+def quickSort(xs: List[Int]): List[Int] = xs match {
+ case Nil => Nil
+ case x::xs => {
+	val left = xs.filter(_<=x)
+	val right = xs.filter(_>x)
+	quickSort(left) ::: List(x) ::: quickSort(right)
+ }
+}
+
+{% endcodeblock %}
+
+
+上述程序可以对Int型对象进行排序，能不能让它对任意的对象都可以排序呢？仔细观察一下，可以发现不同对象的比较运算符可能不一样，对于Int的对象，我们能用运算符>= 或< 来比较两个Int对象的大小，但是对于其他对象比较的运算符就不确定了。为了使得函数能够比较更多类型，可以增加一个比较函数作为参数传进去，于是函数变成这样
+
+{% codeblock 重构一 加上泛型和比较函数 %}
+
+def quickSort[T](xs: List[Int])(lt: (T, T)=> Boolean): List[T] = xs match {
+ case Nil => Nil
+ case x::xs => {
+  val left = xs.filter(lt(_,x))
+  val right = xs.filter(!lt(_,x))
+  quickSort(left)(lt) ::: List(x) ::: quickSort(right)(lt)
+ }
+}
+
+//测试一下
+def strLt(s1 : String, s2: String) = if (s1.compareTo(s2) <=0) true else false
+
+val testList = List("scala","is", "fantastic")
+
+quickSort(testList)(strLt)
+{% endcodeblock %}
+
+重构之后, quickSort函数能够对包含任何对象的列表进行排序。但是改进仍在继续，我们可以通过定义隐式参数把第二参数也去掉。
+
+
+{% codeblock 重构二 加上隐式参数 %}
+
+def quickSort[T](xs: List[Int])(implicit lt: (T, T)=> Boolean): List[T] = xs match {
+ case Nil => Nil
+ case x::xs => {
+  val left = xs.filter(lt(_,x))
+  val right = xs.filter(!lt(_,x))
+  quickSort(left)(lt) ::: List(x) ::: quickSort(right)(lt)
+ }
+}
+
+//测试一下
+implicit def strLt(s1 : String, s2: String) = if (s1.compareTo(s2) <=0) true else false
+
+val testList = List("scala","is", "fantastic")
+
+quickSort(testList)
+
+{% endcodeblock %}
+
+很神奇，对吧？ 那么隐式参数是怎么工作的呢？这要归功于Scala强大的编译器。在Scala中，隐式（implicit）意味着一个值（函数也是值-value）能够自动地传入函数中，或者一个类型的对象能够自动转化成另外一个类型的对象。具体来说implicit在Scala中有下面4种含义。
+
+### 隐式转化 ####
+
+简单来说，如果一个函数调用一个类型为c的对象o的方法m, 这时候发现这个o对象没有方法m, 那么Scala编译器会找到一个隐式类型转化函数，把对象o从c变成另外一个有m方法的类型的对象。
+
+比如 "abc".map(_.toInt), 我们知道String类型是没有map方法的，这时Scala编译器从scala.Predef拿到适合的隐式函数(implicit def augmentString)，把"abc"从类型java.lang.String变成StringOps
+
+于是，我们也可以自己定义隐式转化。比如下面程序中convertIntToOps把Int型对象转成IntOps型对象。
+
+{% codeblock %}
+
+class IntOps(x: Int){
+ def sayHi = "Hi, I am # " + x
+}
+
+implicit def convertIntToOps(x: Int) = new IntOps(x)
+println(1.sayHi)
+
+//以上程序打印出 Hi, I am # 1
+
+{% endcodeblock %}
+
+可以看出隐式类型转化为Scala提供了类似动态语言的Meta-programming的能力。
+
+### 隐式参数 ####
+
+隐式参数在 重构二 加上隐式参数 中已经说过了，这里略去重复描述。
+
+
+
+### View Bound ###
+
+在很多情况下，隐式参数和隐式类型转化被放在一起用，例如下面的例子：
+
+{% codeblock %}
+
+class Container[A](implicit conv: A => Int){
+ def addIt(x: A) = 123 + x
+}
+
+implicit def strToInt(x: String) = x.toInt
+
+(new Container[String]).addIt("123")
+
+{% endcodeblock %}
+
+更简洁的形式是Scala提供的语法糖[A <% Int], 它表示有某个隐式函数把A转化成了Int，你可以像使用Int一样使用A。
+
+{% codeblock 语法糖形式 %}
+
+class Container[A<%Int]{
+ def addIt(x: A) = 123 + x
+}
+
+implicit def strToInt(x: String) = x.toInt
+
+(new Container[String]).addIt("123")
+
+{% endcodeblock %}
+
+我们能够观察到的东西叫View，所以View Bound的意思是在某种特定的情况下(Bound: 范围)， X 可以被当做 Y使用。在语法糖形式中， A<%Int, 表示类型A会被转化成Int用。
+
+### Context Bound ###
+
+implicit的另外一个用处是叫做Context Bound。Context Bound和View Bound有点不同，View Bound是把X当做Y用， 所以需要一个隐式的转化函数，就像上面的implicit def strToInt(x: String) = x.toInt。而Context Bound的意思是上下文(Context)条件下，X有一个Y。在下面代码一中，我定义一个Addable特征，同时有两个实现IntAdd和StringAdd。我把他们声明为implicit object, 目的是Container对象可以引用他们。
+
+{% codeblock 代码一 %}
+
+trait Addable[T]{
+ def add(x: T, y: T): T
+}
+  
+implicit object IntAdd extends Addable[Int]{
+ def add(x: Int, y: Int): Int = x + y
+}
+  
+  
+implicit object StringAdd extends Addable[String]{
+ def add(x: String, y: String): String = x + y
+}
+  
+class Container[A](implicit a: Addable[A]){
+ def add(x:A, y: A) = a.add(x, y)
+}
+  
+(new Container[Int]).add(1, 2)                  
+(new Container[String]).add("a", "b")          
+ 
+{% endcodeblock %}
+
+
+更简洁的形式是Scala提供的语法糖[A: Addable], 它表示在你的函数或者对象（看你是把它定义在函数上还是类上）里有个Addable的对象供你使用。
+
+
+{% codeblock 把Container写成语法糖形式%}
+  
+//定义在类上
+class Container[A: Addable]{
+  	def add(x:A, y: A) = implicitly[Addable[A]].add(x, y)
+}
+  
+(new Container[Int]).add(1, 2)
+(new Container[String]).add("a", "b")
+
+//定义在函数上
+def add[A: Addable](x: A, y: A) = implicitly[Addable[A]].add(x, y)
+add("abc", "def") 
+ 
+{% endcodeblock %}
+
+从上面的代码我们可以看到Container可以使用上下文中的Addable对象，也就是Container有一个Addable对象，就是我上面说的X has-a Y。
+
+除了可以声明implicit object，我们还可以声明implicit class。通过implicit class，我们可以很容易地实现GOF的Adapter模式。在下面代码中，编译器“自动”地把LegacyUserService转化成UserServiceAdapter
+
+{% codeblock 用隐式类型实现一个Adapter 模式%}
+
+trait UserService{
+ def getUserRole(userId: String) : String
+}
+  
+  
+class LegacyUserService{
+ def getUserRoleByUserId(userId: String) : String = {
+	userId.toUpperCase()(0) + " Role"
+ }
+}
+  
+  
+implicit class UserServiceAdapter(legacyUserService : LegacyUserService) extends UserService{
+ def getUserRole(userId: String) = {
+	legacyUserService.getUserRoleByUserId(userId)
+ }
+}
+
+ 
+val userService: UserService = new LegacyUserService()
+                                                   	
+println(userService.getUserRole("alex")) 
+
+{% endcodeblock %}
+
+
+这篇文章的信息量有点大，这和我之前想象的不同，它也花费了我将近一个星期的下班后时间。在边写边思考的过程中，我学到了很多东西。
+
+#### 参考资料 ####
+
+[http://docs.scala-lang.org/tutorials/FAQ/finding-implicits.html]()
+
+[http://www.scala-lang.org/api/current/index.html#scala.math.Ordering]()
+
+[http://www.scala-lang.org/docu/files/ScalaByExample.pdf]()
+
