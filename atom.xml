@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2014-10-16T13:10:13+08:00</updated>
+  <updated>2014-10-16T13:23:29+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -101,11 +101,13 @@ http://www.brotherstechnology.com/docs/icnsae_%28cmj0104-300dpi%29.pdf</p>
     <p>在17世纪的时候有个叫圣 . 文森特的人发现了双曲线$y=x^{-1}$下投影的面积符合对数规律。</p>
   </li>
   <li>
-    <p>根据对数的性质，对数的值为0的时候，对数的根是1。所以我们要求的这个对数函数，当x=1是值为0，并且x增大时趋向无穷大（看看下面的图就明白了），这就必然存在一个大于1的数，使得当这个对数函数x等于这个值的时候，F(x)= 1，我们暂时称这个数为a。
-<img class="left" src="http://candochen.github.io/images/20141016/clipboard.png" width="350" height="350" title="image" alt="images" />
-知道了这两个重要信息，我们想知道这个a到底是怎样一个数? 那么假设<script type="math/tex">x^{-1}</script>在1到<script type="math/tex">\infty</script>的积分的原函数是A(x), 根据导数的定义 </p>
+    <p>根据对数的性质，对数的值为0的时候，对数的根是1。所以我们要求的这个对数函数，当x=1是值为0，并且x增大时趋向无穷大（看看下面的图就明白了），这就必然存在一个大于1的数，使得当这个对数函数x等于这个值的时候，F(x)= 1，我们暂时称这个数为a。</p>
   </li>
 </ol>
+
+<p><img class="left" src="http://candochen.github.io/images/20141016/clipboard.png" width="350" height="350" title="image" alt="images" /> (图片来源自wikipedia)</p>
+
+<p>知道了这两个重要信息，我们想知道这个a到底是怎样一个数? 那么假设<script type="math/tex">x^{-1}</script>在1到<script type="math/tex">\infty</script>的积分的原函数是A(x), 根据导数的定义 </p>
 
 <script type="math/tex; mode=display">A'(x) = \frac{A(x+h) - A(x)}{h} = \frac{1}{x}</script>
 
@@ -126,9 +128,9 @@ http://www.brotherstechnology.com/docs/icnsae_%28cmj0104-300dpi%29.pdf</p>
 <h2 id="ex-">$e^x$ 是什么</h2>
 <p>$e^x$是ln(x)的反函数，它是指数函数。我们知道指数函数有这样的性质：</p>
 
-<p>性质1 f(x+y) = f(x)*f(y)</p>
+<p>性质1 $f(x+y) = f(x)*f(y)$</p>
 
-<p>性质2 f(xy) = f(x)^y</p>
+<p>性质2 $f(xy) = f(x)^y$</p>
 
 <p>根据导数的定义，对指数函数求导</p>
 
