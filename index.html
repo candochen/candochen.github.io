@@ -283,142 +283,6 @@ http://www.brotherstechnology.com/docs/icnsae_%28cmj0104-300dpi%29.pdf</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/17/scala-4/">Scala 点滴 (4)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-17T09:24:48+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>9:24 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2 id="section">模式匹配</h2>
-
-<h3 id="section-1">前言</h3>
-<p>在Scala中，模式匹配（Pattern Matching）起着非常重要的作用，它不仅仅是switch的增强，而且更重要的是它提供了组合对象的析构(decomposition)能力。模式匹配之于Scala的重要性怎么强调都不过分。</p>
-
-<p>但实际上，Scala不是第一个提出模式匹配概念的。在Scala之前，上世纪70年代中就出现了模式匹配的身影，第一个包含模式匹配概念的可能是ML语言，此后模式匹配便是很多函数式语言的标配，比如ML， Caml, Erlang 和 Haskell。</p>
-
-<p>Scala语言是瑞士洛桑理工大学的Martin Odersky教授发明的。他当时的目的是造出一种把函数式编程范式和面向对象编程范式结合到一起的编程语言。所以他肯定也会把函数式语言里的好东西(Pattern Matching)功能加入到Scala语言中来。</p>
-
-<p>模式匹配(Pattern Matching)，如果按照我的理解来说，就是通过模式(Pattern)来匹配（Match）对象的。实际上Martin Ordersky也专门有篇论文 [http://lampwww.epfl.ch/~emir/written/MatchingObjectsWithPatterns-TR.pdf] (Matching Objects With Patterns) 来阐述Scala是如何匹配对象的。</p>
-
-<p>这篇文章也主要本人是在该论文的基础上的学习和思考，其中可能有不完善的地方，请各位慷慨指出。</p>
-
-<h3 id="section-2">通过模式匹配对象</h3>
-<p>数据在面向对象语言中是类层次的方式存储的，比如说下面的Java代码中，一个User对象存储String类型的id和name,以及一个Account类型的列表。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">public interface Account{
-</span><span class="line"> public void deposit(Double amount);	
-</span><span class="line"> //省略一些方法
-</span><span class="line"> ...
-</span><span class="line">}
-</span><span class="line">
-</span><span class="line">public class SavingAccount extends Account{
-</span><span class="line"> private Double balance;
-</span><span class="line"> public void deposit(Double amount){
-</span><span class="line">  balance += amount;	 
-</span><span class="line"> }	
-</span><span class="line">}
-</span><span class="line">
-</span><span class="line">public class PaymentAccount extends Account{
-</span><span class="line"> public void deposit(Double amount){
-</span><span class="line">  throw new IllegalStateException("no deposit on payment account."); 
-</span><span class="line"> }
-</span><span class="line">} 
-</span><span class="line">
-</span><span class="line">public class User{
-</span><span class="line">	private String id;
-</span><span class="line">	private String name;
-</span><span class="line">    private List&lt;Account&gt; accounts;
-</span><span class="line">   
-</span><span class="line">    //省略一些方法
-</span><span class="line">	...
-</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"></pre></td><td class="code"><pre><code class=""></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h3 id="section-3">树形结构</h3>
-
-<h3 id="partial-applied-function">偏函数(Partial Applied Function)</h3>
-
-<h3 id="vs-visitor">模式匹配 vs 访问者模式(Visitor)</h3>
-
-<p>我之前跟朋友说过，</p>
-
-<blockquote>
-  <p>我想谈谈GOF设计模式的存在问题（是“存在问题”，不是”存在的问题“，就是GOF设计模式为什么会存在），我觉得GOF设计模式之所以存在是因为两个方面：一方面是GOF总结了在面向对象软件开发领域所会面临的问题；另一方面是他们把这些问题分门别类，并给出了通过面向对象语言给出了相应的解决方案。假如我们只关心第二个方面（只关心解决方法），我们会发现GOF设计模式中的一些模式其实是由于面向对象编程语言引起的，假如我们的面向对象编程语言足够完美了，我们完全不需要通过GOF描述的设计方案（或者说方法）就可以解决设计模式需要解决的问题。</p>
-</blockquote>
-
-<p>而朋友说，</p>
-
-<blockquote>
-  <p>设计模式是提供了特定场景（Context）下的设计方案，这与语言没有关系吧。如果有，也是语言层面已将这些包装起来了</p>
-</blockquote>
-
-<p>针对这个讨论，我想在这里重申一下，同时坚持我以上的观点。首先来看，GOF的《Design Pattern》对一个模式Visitor模式的定义，</p>
-
-<blockquote>
-  <p>Represent an operation to be performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.</p>
-</blockquote>
-
-<h3 id="vs-chain-of-responsibility">模式匹配 vs 责任链模式(Chain of Responsibility)</h3>
-
-<h3 id="section-4">参考资料</h3>
-
-<p>http://stackoverflow.com/questions/8618082/visitor-pattern-in-scala</p>
-
-<p>http://www.artima.com/scalazine/articles/pattern_matching.html</p>
-
-<p><a href="Matching Objects With Patterns">http://lampwww.epfl.ch/~emir/written/MatchingObjectsWithPatterns-TR.pdf</a></p>
-
-<p>http://www.artima.com/pins1ed/case-classes-and-pattern-matching.html</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2014/09/03/scala-3/">Scala 点滴 (3)</a></h1>
     
     
@@ -1250,6 +1114,35 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/20/wenchangeenglish/">文昌人常说的英语</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-20T19:03:03+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:03 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>排球自从被华侨引进后就成了我们文昌的最热门运动，球出界的时候球员都大喊”奥赛”，它是个英语outside.   在文昌话中，螺丝刀叫”斯哥杜”, 其来源于英语”screw”.  另外我们文昌人管穿皮鞋叫穿”boots”.</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -1269,10 +1162,6 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
       </li>
     
       <li class="post">
-        <a href="/blog/2014/09/17/scala-4/">Scala 点滴 (4)</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2014/09/03/scala-3/">Scala 点滴 (3)</a>
       </li>
     
@@ -1282,6 +1171,10 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
     
       <li class="post">
         <a href="/blog/2014/08/31/scala-2/">Scala 点滴 (2)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 (1)</a>
       </li>
     
   </ul>
@@ -1307,7 +1200,7 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
     
 	
       <li class="post">
-        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (4) </a>
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (3) </a>
       </li>
     
   </ul>
