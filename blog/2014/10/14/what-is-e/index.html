@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>数学常数中的e是什么 - 观察 记录 思考</title>
+  <meta name="author" content="Cando">
+
+  
+  <meta name="description" content="e是个很重要的数学常数，但是假如你在网上找e的定义，它会告诉你e是自然对数的底，然后你查什么是自然对数，它告诉你，自然对数是以e为底的对数。这就陷入了一个死循环,它就是始终不告诉你e是什么。我被这个问题困扰很久，直到最近看了这篇博客http://www.ruanyifeng.com/blog/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://candochen.github.io/blog/2014/10/14/what-is-e">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="观察 记录 思考" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  <!--
+-->
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">观察 记录 思考</a></h1>
+  
+    <h2>关于计算机、数学、英语和历史的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:candochen.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">数学常数中的e是什么</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-14T13:11:52+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:11 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>e是个很重要的数学常数，但是假如你在网上找e的定义，它会告诉你e是自然对数的底，然后你查什么是自然对数，它告诉你，自然对数是以e为底的对数。这就陷入了一个死循环,它就是始终不告诉你e是什么。我被这个问题困扰很久，直到最近看了这篇博客http://www.ruanyifeng.com/blog/2011/07/mathematical_constant_e.html 才稍微有些理解。但是，这篇博客并没有更深入地把e作为自然对数的底的原因讲到，所以顺着自己的好奇心，我看了几本关于数学的书，这才解了我心中的谜团。在这些书中 《e的故事，一个常数的传奇》以及《什么是数学，对思想和方法的基本研究》对这篇文章贡献最大，这篇文章的思路是这两本书给的。</p>
+
+<h2 id="e-">e 是什么</h2>
+
+<p>先说利息是什么。简单来说利息就是钱生的钱。假如你存1万块钱到银行，银行给你的年利率是100%（这是假设的，别做梦了），那么一年之后你拿到的钱是2万，可以根据这个公式算得 </p>
+
+<script type="math/tex; mode=display">本金*(1+100\%)^1=2</script>
+
+<p>现在你可能要想一年计息一次，我可以拿到2万，假如计息两次呢？于是你跟银行说，我要一年计息两次，银行说好吧，一年的利息是100%，那么半年的利息是50%，一年计息2次，你可以得</p>
+
+<script type="math/tex; mode=display">本金*(1+\frac{1}{2})^2=2.25</script>
+
+<p>你感觉到赚了，于是继续提要求，一年计息4次，银行说好吧，一年的利息是100%，那么一季度的利息是25%，一年计息4次，你可以得到</p>
+
+<script type="math/tex; mode=display">本金*(1+\frac{1}{2})^4=2.44</script>
+
+<p>这次你感觉赚了，但是增长少了，上次增长2.25-2 = 0.25，这次增长2.44 - 2.25 = 0.21。你在想假如我一年计息12次，365次，甚至每秒都计息，一年以后你会得到多少钱呢？你发现多计息一次，你就多赚一点，但是赚到的比上次少了点，你想假如无限次计息, 那么一年之后最多你能拿到多少钱呢？是否无无限多呢，还是存在某个极限？</p>
+
+<p>也就是这个式子<script type="math/tex">(1 + \frac{1}{n})^n</script>, 在n趋向无穷大的时候是否存在极限。答案是会的，这个极限就是e, 它是个无理数，近似值是2.718281828。</p>
+
+<p>所以一年之后，即使是无限次计息，你一年也只能拿到 </p>
+
+<script type="math/tex; mode=display">本金*e \approx 2.718281828</script>
+
+<h2 id="e">e的无穷级数的形式</h2>
+<p>所以我们知道 <script type="math/tex"> e = \lim_{n\to\infty}(1 + \frac{1}{n})^n </script>, 我们把式子写成 <script type="math/tex">e= \lim_{n\to\infty}(\frac{1}{n} + 1)^n</script>, 并通过二项式将其展开</p>
+
+<p>$(\frac{1}{n} + 1) ^n = \binom{n}{0}\frac{1}{n}^0  1^n + \binom{n}{1}\frac{1}{n}^1  1^{n-1} + … \binom{n}{1}\frac{1}{n}^n  1^0$</p>
+
+<p>当<script type="math/tex">n\to\infty</script>，<script type="math/tex">e = \sum_{n=0}^{\infty}\frac{1}{n!}</script>, 也可以更明了地写成 </p>
+
+<script type="math/tex; mode=display"> e = \frac{1}{0!} + \frac{1}{1!} + \frac{1}{2!} + \frac{1}{3!} + ... </script>
+
+<p>这个级数是牛顿在1769年发现的。</p>
+
+<h2 id="e-1">e的近似解</h2>
+
+<p>知道了e的无穷级数形式，我们可以通过程序计算出它的近似值。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">def factorial(n: Int) : Int = {
+</span><span class="line">    def factIter(n: Int, accu: Int) : Int = {
+</span><span class="line">         if (n==0) accu
+</span><span class="line">         else if(n==1) accu
+</span><span class="line">         else factIter(n-1, accu * n)
+</span><span class="line">     }
+</span><span class="line">    factIter(n, 1)
+</span><span class="line">  } 
+</span><span class="line"> 
+</span><span class="line">  def numerator(n: Int) :Int ={
+</span><span class="line">       (0 to n).map(factorial(n) / factorial(_)).sum
+</span><span class="line">  }
+</span><span class="line"> 
+</span><span class="line">  numerator(12).toDouble / factorial(12)</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>上面程序算出的结果是，2.7182818282861687</p>
+
+<p>有通过改进牛顿无穷级数公式，通过6个项相加就可能得到近似值2.718281828
+http://www.intmath.com/exponential-logarithmic-functions/calculating-e.php
+http://www.brotherstechnology.com/docs/icnsae_%28cmj0104-300dpi%29.pdf</p>
+
+<h2 id="lnx">ln(x)是什么</h2>
+
+<p>数学不是按照教科书上的顺序发展的，其中积分的发明比微分早就是一个例子。这其中的原因可能是相对于一个曲线的斜率，人们更关心的是某个闭合曲线的面积吧。微积分发明以后人们知道假如面积可由函数F(x)表示，那么F(x)的导数恰好就曲线的函数。所以为了求闭合曲线下的面积，我们要找到曲线函数的原函数。对于函数<script type="math/tex">f(x)=x^n</script>，我们可以得到它的原函数为<script type="math/tex">F(x) = \frac{1}{n + 1} x ^{n+1}</script>，其中n对于任意有理数和无理数都成立。但是有个例外，就是n=-1，因为当n=-1的时候 <script type="math/tex">\frac{1}{n+1}</script>不存在。那么$x^{-1}$的原函数是什么呢？我们现在根据以下两个线索找找,</p>
+
+<ol>
+  <li>
+    <p>在17世纪的时候有个叫圣 . 文森特的人发现了双曲线$y=x^{-1}$下投影的面积符合对数规律。</p>
+  </li>
+  <li>
+    <p>根据对数的性质，对数的值为0的时候，对数的根是1。所以我们要求的这个对数函数，当x=1是值为0，并且x增大时趋向无穷大（看看下面的图就明白了），这就必然存在一个大于1的数，使得当这个对数函数x等于这个值的时候，F(x)= 1，我们暂时称这个数为a。
+<img class="left" src="/images/20141016/clipboard.png" width="350" height="350" title="image" alt="images" />
+知道了这两个重要信息，我们想知道这个a到底是怎样一个数? 那么假设<script type="math/tex">x^{-1}</script>在1到<script type="math/tex">\infty</script>的积分的原函数是A(x), 根据导数的定义 </p>
+  </li>
+</ol>
+
+<script type="math/tex; mode=display">A'(x) = \frac{A(x+h) - A(x)}{h} = \frac{1}{x}</script>
+
+<script type="math/tex; mode=display">A'(x) = \frac{A(x+h) - A(x)}{h} = A(1 + \frac{h}{x}) = \frac{1}{x}</script>
+
+<p>用<script type="math/tex">\frac{1}{n}, n\to\infty</script>来代替h，我们得到</p>
+
+<script type="math/tex; mode=display">A'(x) = A(1+\frac{1}{nx}) * n = \frac{1}{x}</script>
+
+<p>根据对数性质外面的n可以移到函数里面变成</p>
+
+<script type="math/tex; mode=display">A'(x) = A((1+\frac{1}{nx})^n) = \frac{1}{x}</script>
+
+<p>令x = 1 等式右边为1，等式左边括号里的东西就是<script type="math/tex"> e = \lim_{n\to\infty}(1 + \frac{1}{n})^n </script>,  原来我们要找的这个数就是e</p>
+
+<p>由于A(x）是对数函数那么它的形式是$\log_a(x)$, 由于$\log_a(e) = 1$，所以a= e, 也就是以e为底的对数，也称自然对数，记为ln。 它的函数式ln(x), 它是曲线从1到x的积分， 即$\int_1^x \frac{1}{u}\,du$。</p>
+
+<h2 id="ex-">$e^x$ 是什么</h2>
+<p>$e^x$是ln(x)的反函数，它是指数函数。我们知道指数函数有这样的性质：</p>
+
+<p>性质1 f(x+y) = f(x)*f(y)</p>
+
+<p>性质2 f(xy) = f(x)^y</p>
+
+<p>根据导数的定义，对指数函数求导</p>
+
+<script type="math/tex; mode=display">f'(x) = \frac{f(x+h) - f(x)}{h}, h\to 0</script>
+
+<p>应用性质1</p>
+
+<script type="math/tex; mode=display">f'(x) = f(x) * \frac{f(h) - 1}{h}, h\to 0</script>
+
+<p>所以我们可以看出指数函数的导数和它自身存在倍数关系，在什么情况先指数函数跟它自身相等呢？从上面式子可以看出，假如$\frac{f(h) - 1}{h} = 1, h\to 0$, 那么该指数函数的导数就和自身相等了。</p>
+
+<p>针对$\frac{f(h) - 1}{h} = 1, h\to 0$, 令$h = \frac{1}{n}, n\to\infty$</p>
+
+<script type="math/tex; mode=display">\frac{f(\frac{1}{n}) - 1}{\frac{1}{n}} = 1, n\to\infty</script>
+
+<script type="math/tex; mode=display">f(\frac{1}{n}) - 1 = n, n\to\infty</script>
+
+<script type="math/tex; mode=display">f(\frac{1}{n}) = n + 1, n\to\infty</script>
+
+<script type="math/tex; mode=display">f(1)^\frac{1}{n} = n + 1, n\to\infty</script>
+
+<script type="math/tex; mode=display">f(1) = (n + 1)^n, n\to\infty</script>
+
+<p>可以看出等式右边就是e，所以当指数函数是以e为底的指数函数式它的导数等于自身。</p>
+
+<blockquote>
+  <p>自然指数函数与它的导数相等。这是指数函数所有特征的本源，也是它得到重要应用的根本原因。–柯朗和罗宾斯《什么是数学》1941</p>
+</blockquote>
+
+<p>另外，针对$\lim_{n\to\infty}(1 + \frac{1}{nx})^n$ 做二项式展开，得</p>
+
+<script type="math/tex; mode=display">\frac{1}{0!} + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + ... </script>
+
+<p>对以上无穷级数的每项对x求导，结果还是</p>
+
+<script type="math/tex; mode=display">\frac{1}{0!} + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + ... </script>
+
+<p>所以</p>
+
+<script type="math/tex; mode=display">e^x = \frac{1}{0!} + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + ... </script>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Cando</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-10-14T13:11:52+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:11 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/09/17/scala-4/" title="Previous Post: Scala 点滴 (4)">&laquo; Scala 点滴 (4)</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>发表评论</h1>
+	<div id="comments" aria-live="polite"><!-- 多说评论框 start -->
+
+<div class="ds-thread" data-thread-key="/blog/2014/10/14/what-is-e" data-title="数学常数中的e是什么" data-url="//blog/2014/10/14/what-is-e/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"candochen"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end --></div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/10/14/what-is-e/">数学常数中的e是什么</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/17/scala-4/">Scala 点滴 (4)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/03/scala-3/">Scala 点滴 (3)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/learning-how-to-learn-4/">如何学习 (4)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/31/scala-2/">Scala 点滴 (2)</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/english/index.html">  english (2) </a>
+      </li>
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/others/index.html">  others (2) </a>
+      </li>
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/learn/index.html">  learn (4) </a>
+      </li>
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (4) </a>
+      </li>
+    
+  </ul>
+</section><section>
+<h1>最近评论</h1>
+<ul class="ds-recent-comments" data-num-items="10">
+</ul>
+<!--多说js加载开始，一个页面只需要加载一次 -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"candochen"};
+(function() {
+var ds = document.createElement('script');
+ds.type = 'text/javascript';
+ds.async = true;ds.src = 'http://static.duoshuo.com/embed.js';
+ds.charset = 'UTF-8';
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+<!--多说js加载结束，一个页面只需要加载一次 -->
+</section>
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Cando -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scala | 观察 记录 思考]]></title>
   <link href="http://candochen.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2014-09-17T13:17:07+08:00</updated>
+  <updated>2014-10-16T12:23:16+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -23,16 +23,81 @@
 <h3 id="section-1">前言</h3>
 <p>在Scala中，模式匹配（Pattern Matching）起着非常重要的作用，它不仅仅是switch的增强，而且更重要的是它提供了组合对象的析构(decomposition)能力。模式匹配之于Scala的重要性怎么强调都不过分。</p>
 
-<p>但实际上，Scala不是第一个提出模式匹配概念的。在Scala之前，上世纪70年代中就出现了模式匹配的身影，第一个包含模式匹配概念的可能是ML语言，此后模式匹配便是很多函数式语言的标准功能，比如ML， Caml, Erlang 和 Haskell。</p>
+<p>但实际上，Scala不是第一个提出模式匹配概念的。在Scala之前，上世纪70年代中就出现了模式匹配的身影，第一个包含模式匹配概念的可能是ML语言，此后模式匹配便是很多函数式语言的标配，比如ML， Caml, Erlang 和 Haskell。</p>
 
-<p>Scala语言是瑞士咯桑理工大学的Martin Ordersky教授发明的。他当时的目的是造出一种把函数式编程范式和面向对象编程范式结合到一起的编程语言。所以他肯定也会把函数式语言里的好东西(Pattern Matching)功能加入到Scala语言中来。</p>
+<p>Scala语言是瑞士洛桑理工大学的Martin Odersky教授发明的。他当时的目的是造出一种把函数式编程范式和面向对象编程范式结合到一起的编程语言。所以他肯定也会把函数式语言里的好东西(Pattern Matching)功能加入到Scala语言中来。</p>
 
 <p>模式匹配(Pattern Matching)，如果按照我的理解来说，就是通过模式(Pattern)来匹配（Match）对象的。实际上Martin Ordersky也专门有篇论文 [http://lampwww.epfl.ch/~emir/written/MatchingObjectsWithPatterns-TR.pdf] (Matching Objects With Patterns) 来阐述Scala是如何匹配对象的。</p>
 
 <p>这篇文章也主要本人是在该论文的基础上的学习和思考，其中可能有不完善的地方，请各位慷慨指出。</p>
 
 <h3 id="section-2">通过模式匹配对象</h3>
-<p>数据在面向对象语言中是类层次的方式存储的，比如说</p>
+<p>数据在面向对象语言中是类层次的方式存储的，比如说下面的Java代码中，一个User对象存储String类型的id和name,以及一个Account类型的列表。</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;p>public interface Account{
+</span><span class='line'> public void deposit(Double amount);	
+</span><span class='line'> //省略一些方法
+</span><span class='line'> …
+</span><span class='line'>}&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;p>public class SavingAccount extends Account{
+</span><span class='line'> private Double balance;
+</span><span class='line'> public void deposit(Double amount){
+</span><span class='line'>  balance += amount;	 
+</span><span class='line'> }	
+</span><span class='line'>}&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;p>public class PaymentAccount extends Account{
+</span><span class='line'> public void deposit(Double amount){
+</span><span class='line'>  throw new IllegalStateException(“no deposit on payment account.”); 
+</span><span class='line'> }
+</span><span class='line'>} &lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;p>public class User{
+</span><span class='line'>	private String id;
+</span><span class='line'>	private String name;
+</span><span class='line'>    private List&lt;account> accounts;&lt;/account>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;pre>&lt;code>//省略一些方法
+</span><span class='line'>... }</span></code></pre></td></tr></table></div></figure></notextile></div>
+</code></pre>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <h3 id="section-3">树形结构</h3>
 
