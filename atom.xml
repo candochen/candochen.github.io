@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2014-10-16T13:23:29+08:00</updated>
+  <updated>2014-10-23T12:17:41+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -94,7 +94,7 @@ http://www.brotherstechnology.com/docs/icnsae_%28cmj0104-300dpi%29.pdf</p>
 
 <h2 id="lnx">ln(x)是什么</h2>
 
-<p>数学不是按照教科书上的顺序发展的，其中积分的发明比微分早就是一个例子。这其中的原因可能是相对于一个曲线的斜率，人们更关心的是某个闭合曲线的面积吧。微积分发明以后人们知道假如面积可由函数F(x)表示，那么F(x)的导数恰好就曲线的函数。所以为了求闭合曲线下的面积，我们要找到曲线函数的原函数。对于函数<script type="math/tex">f(x)=x^n</script>，我们可以得到它的原函数为<script type="math/tex">F(x) = \frac{1}{n + 1} x ^{n+1}</script>，其中n对于任意有理数和无理数都成立。但是有个例外，就是n=-1，因为当n=-1的时候 <script type="math/tex">\frac{1}{n+1}</script>不存在。那么$x^{-1}$的原函数是什么呢？我们现在根据以下两个线索找找,</p>
+<p>数学不是按照教科书上的顺序发展的，其中积分的发明比微分早就是一个例子。这其中的原因可能是相对于一个曲线的斜率，人们更关心的是某个闭合曲线的面积吧。微积分发明以后人们知道假如面积可由函数F(x)表示，那么F(x)的导数恰好就曲线的函数。所以为了求闭合曲线下的面积，我们要找到曲线函数的原函数。对于函数<script type="math/tex">f(x)=x^n</script>，我们可以得到它的原函数为<script type="math/tex">F(x) = \frac{1}{n + 1} x ^{n+1}</script>，其中n对于任意有理数都成立。但是有个例外，就是n=-1，因为当n=-1的时候 <script type="math/tex">\frac{1}{n+1}</script>不存在。那么$x^{-1}$的原函数是什么呢？我们现在根据以下两个线索找找,</p>
 
 <ol>
   <li>
