@@ -9,7 +9,7 @@
   <meta name="author" content="Cando">
 
   
-  <meta name="description" content="e是个很重要的数学常数，但是假如你在网上找e的定义，它会告诉你e是自然对数的底，然后你查什么是自然对数，它告诉你，自然对数是以e为底的对数。这就陷入了一个死循环,它就是始终不告诉你e是什么。我被这个问题困扰很久，直到最近看了这篇博客http://www.ruanyifeng.com/blog/ &hellip;">
+  <meta name="description" content="In the Reactive Programming course, Erik Meijer introduced 4 essential effects in programming. This text is intended to describe the essential &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -98,6 +98,199 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/05/03/observable/">Observable</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-05-03T19:26:15+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2016</span></span> <span class='time'>7:26 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the Reactive Programming course, Erik Meijer introduced 4 essential effects in programming. This text is intended to describe the essential effects in my own way, with examples. </p>
+
+<p>Let’s begin with simple functions, which return one or many values synchronously.  As shown in the below diagram, the getValue function returns a value of type T, and getValues returns an iterable of type T. </p>
+
+<p>Figure 1</p>
+
+<h1 id="exception">Exception</h1>
+<p>Any developer should know that apart from the normal case, there exist exceptions. For example, 
+exception will occur if users enter 0 as the divisor in the below function.
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">def divide(dividend: Double, divisor : Double) : Double = {
+</span><span class="line">    dividend / divisor
+</span><span class="line">}</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
+
+<p>In order to handle the case when exception happens, we should wrap the computation within a Try monad. So the code should be </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">def divide(dividend: Double, divisor : Double) : Try[Double] = {
+</span><span class="line">    Try(dividend / divisor)
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>User of this function will be aware of the Try[Double]. It is very comprehensive. This function reads like “try to get a value of Double type by invoking the function divide” literally.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">val result = divide(divident, divisor)
+</span><span class="line">
+</span><span class="line">result match {
+</span><span class="line">	case Success(v) =&gt; println(v)
+</span><span class="line">	case Failure(e) =&gt; println(e)
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Likewise, a function returning many value also may have exceptions. In such case, what we need to do is to define the function as  def getValue: Try[Iterable[T]]</p>
+
+<p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering exceptions, the table becomes:</p>
+
+<table>
+<thead>
+<tr>
+  <th></th>
+  <th>One</th>
+  <th>Many</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Synchronous</td>
+  <td>Try[T] getValue</td>
+  <td>Try[Iterable[T]]  getValues</td>
+</tr>
+
+</tbody>
+</table>
+
+<h1 id="latency">Latency</h1>
+
+<p>Besides exceptions, one term in computer programming we should consider is Latency. Latency by narrow definition in computer programming is: 
+&gt; 
+Latency is the amount of time a message takes to traverse a system. In a computer network, it is an expression of how much time it takes for a packet of data to get from one designated point to another. It is sometimes measured as the time required for a packet to be returned to its sender.</p>
+
+<p>From my perspective, if any computation that is expected be slower that other computation, then there exists latency for the slower computation relatively. For example, getFromNetwork has latency comparing with getFromRAM.</p>
+
+<p>In order to handle the expected latency, we can make use of Future.<br />
+&gt;A Future is an object holding a value which may become available at some point.</p>
+
+<p>Let’s look at an example:</p>
+
+<p>{code}</p>
+
+<p>import scala.concurrent._</p>
+
+<p>import ExecutionContext.Implicits.global</p>
+
+<p>import scala.util.{Success, Failure}</p>
+
+<p>object Weather extends App{</p>
+
+<pre><code>	//val content = Source.fromURL("www.weather.com.cn/data/sk/101280601.html").mkString
+	val weatherFuture  = Future {
+		WeatherInfoRestService.getWeatherInfo
+	}
+	
+	
+	//register a callback
+	weatherFuture onSuccess {
+	  case x =&gt; {
+		  			println(x.weatherinfo.city)
+		  			println(x.weatherinfo.time)
+		  			println(x.weatherinfo.temp)
+	  			} 
+	}
+  
+	weatherFuture onFailure {
+	  case e =&gt; println(e)
+	}
+</code></pre>
+
+<p>} </p>
+
+<p>{code} </p>
+
+<p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering exceptions, the table becomes:</p>
+
+<table>
+<thead>
+<tr>
+  <th></th>
+  <th>One</th>
+  <th>Many</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Synchronous</td>
+  <td>Try[T] getValue</td>
+  <td>Try[Iterable[T]]  getValues</td>
+</tr>
+
+<tr>
+  <td>Asynchronous</td>
+  <td>Future[T] getValue</td>
+  <td>???</td>
+</tr>
+
+</tbody>
+</table>
+
+<h1 id="observable">Observable</h1>
+
+<table>
+<thead>
+<tr>
+  <th></th>
+  <th>One</th>
+  <th>Many</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Synchronous</td>
+  <td>Try[T] getValue</td>
+  <td>Try[Iterable[T]]  getValues</td>
+</tr>
+
+<tr>
+  <td>Asynchronous</td>
+  <td>Future[T] getValue</td>
+  <td>Observable[T] getValues</td>
+</tr>
+
+</tbody>
+</table>
+
+<p>images/20160527/stream.png</p>
+
+<h1 id="wrap-up">Wrap-up</h1>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1116,35 +1309,6 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/20/wenchangeenglish/">文昌人常说的英语</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-20T19:03:03+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:03 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>排球自从被华侨引进后就成了我们文昌的最热门运动，球出界的时候球员都大喊”奥赛”，它是个英语outside.   在文昌话中，螺丝刀叫”斯哥杜”, 其来源于英语”screw”.  另外我们文昌人管穿皮鞋叫穿”boots”.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -1160,6 +1324,10 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/05/03/observable/">Observable</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/14/what-is-e/">数学常数中的e是什么</a>
       </li>
     
@@ -1173,10 +1341,6 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
     
       <li class="post">
         <a href="/blog/2014/08/31/scala-2/">Scala 点滴 (2)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/31/scala-1/">Scala 点滴 (1)</a>
       </li>
     
   </ul>
@@ -1202,7 +1366,7 @@ Unhappy felling -&gt;You funnel attention onto a more pleasant task -&gt; Feel h
     
 	
       <li class="post">
-        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (3) </a>
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (4) </a>
       </li>
     
   </ul>
