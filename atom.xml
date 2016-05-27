@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-27T14:16:10+08:00</updated>
+  <updated>2016-05-27T14:24:49+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -63,70 +63,80 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 
 <p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering exceptions, the table becomes:</p>
 
-<table>
-<thead>
-<tr>
-  <th></th>
-  <th>One</th>
-  <th>Many</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>Synchronous</td>
-  <td>Try[T] getValue</td>
-  <td>Try[Iterable[T]]  getValues</td>
-</tr>
-
-</tbody>
-</table>
-
 <h1 id="latency">Latency</h1>
 
-<p>Besides exceptions, one term in computer programming we should consider is Latency. Latency by narrow definition in computer programming is: 
-&gt; 
-Latency is the amount of time a message takes to traverse a system. In a computer network, it is an expression of how much time it takes for a packet of data to get from one designated point to another. It is sometimes measured as the time required for a packet to be returned to its sender.</p>
+<p>Besides exceptions, one term in computer programming we should consider is Latency. Latency by narrow definition in computer programming is: </p>
+
+<blockquote>
+  <p>Latency is the amount of time a message takes to traverse a system. In a computer network, it is an expression of how much time it takes for a packet of data to get from one designated point to another. It is sometimes measured as the time required for a packet to be returned to its sender.</p>
+</blockquote>
 
 <p>From my perspective, if any computation that is expected be slower that other computation, then there exists latency for the slower computation relatively. For example, getFromNetwork has latency comparing with getFromRAM.</p>
 
-<p>In order to handle the expected latency, we can make use of Future.<br />
-&gt;A Future is an object holding a value which may become available at some point.</p>
+<p>In order to handle the expected latency, we can make use of Future.  </p>
+
+<blockquote>
+  <p>A Future is an object holding a value which may become available at some point.</p>
+</blockquote>
 
 <p>Let’s look at an example:</p>
 
-<p>{code}</p>
-
-<p>import scala.concurrent._</p>
-
-<p>import ExecutionContext.Implicits.global</p>
-
-<p>import scala.util.{Success, Failure}</p>
-
-<p>object Weather extends App{</p>
-
-<pre><code>	//val content = Source.fromURL("www.weather.com.cn/data/sk/101280601.html").mkString
-	val weatherFuture  = Future {
-		WeatherInfoRestService.getWeatherInfo
-	}
-	
-	
-	//register a callback
-	weatherFuture onSuccess {
-	  case x =&gt; {
-		  			println(x.weatherinfo.city)
-		  			println(x.weatherinfo.time)
-		  			println(x.weatherinfo.temp)
-	  			} 
-	}
-  
-	weatherFuture onFailure {
-	  case e =&gt; println(e)
-	}
-</code></pre>
-
-<p>} </p>
-
-<p>{code} </p>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">import scala.concurrent._
+</span><span class="line">
+</span><span class="line">import ExecutionContext.Implicits.global
+</span><span class="line">
+</span><span class="line">import scala.util.{Success, Failure}
+</span><span class="line">
+</span><span class="line">object Weather extends App{
+</span><span class="line">		
+</span><span class="line">		//val content = Source.fromURL("www.weather.com.cn/data/sk/101280601.html").mkString
+</span><span class="line">		val weatherFuture  = Future {
+</span><span class="line">			WeatherInfoRestService.getWeatherInfo
+</span><span class="line">		}
+</span><span class="line">		
+</span><span class="line">		
+</span><span class="line">		//register a callback
+</span><span class="line">		weatherFuture onSuccess {
+</span><span class="line">		  case x =&gt; {
+</span><span class="line">			  			println(x.weatherinfo.city)
+</span><span class="line">			  			println(x.weatherinfo.time)
+</span><span class="line">			  			println(x.weatherinfo.temp)
+</span><span class="line">		  			} 
+</span><span class="line">		}
+</span><span class="line">	  
+</span><span class="line">		weatherFuture onFailure {
+</span><span class="line">		  case e =&gt; println(e)
+</span><span class="line">		}
+</span><span class="line">		
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering exceptions, the table becomes:</p>
 
