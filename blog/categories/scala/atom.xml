@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scala | 观察 记录 思考]]></title>
   <link href="http://candochen.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-27T12:59:20+08:00</updated>
+  <updated>2016-05-27T13:03:09+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -56,7 +56,7 @@
 <h1 id="exception">Exception</h1>
 <p>Any developer should know that apart from the normal case, there exist exceptions. For example, 
 exception will occur if users enter 0 as the divisor in the below function.
-{% highlight scala %}</p>
+{% highlight ruby %}</p>
 
 <p>def divide(dividend: Double, divisor : Double) : Double = {
     dividend / divisor
@@ -65,7 +65,7 @@ exception will occur if users enter 0 as the divisor in the below function.
 
 <p>In order to handle the case when exception happens, we should wrap the computation within a Try monad. So the code should be </p>
 
-<p>{% highlight scala %}
+<p>{% highlight ruby %}
 def divide(dividend: Double, divisor : Double) : Try[Double] = {
     Try(dividend / divisor)
 }
@@ -73,14 +73,16 @@ def divide(dividend: Double, divisor : Double) : Try[Double] = {
 
 <p>User of this function will be aware of the Try[Double]. It is very comprehensive. This function reads like “try to get a value of Double type by invoking the function divide” literally.</p>
 
-<p>{% highlight scala %}
-val result = divide(divident, divisor)</p>
+<p>{% highlight ruby %}</p>
+
+<p>val result = divide(divident, divisor)</p>
 
 <p>result match {
 	case Success(v) =&gt; println(v)
 	case Failure(e) =&gt; println(e)
-}
-{% endhighlight %}</p>
+}</p>
+
+<p>{% endhighlight %}</p>
 
 <p>Likewise, a function returning many value also may have exceptions. In such case, what we need to do is to define the function as  def getValue: Try[Iterable[T]]</p>
 
