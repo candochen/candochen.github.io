@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-27T14:14:13+08:00</updated>
+  <updated>2016-05-27T14:16:10+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -26,13 +26,14 @@
 
 <h1 id="exception">Exception</h1>
 <p>Any developer should know that apart from the normal case, there exist exceptions. For example, 
-exception will occur if users enter 0 as the divisor in the below function.
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+exception will occur if users enter 0 as the divisor in the below function.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">def divide(dividend: Double, divisor : Double) : Double = {
+</pre></td><td class="code"><pre><code class=""><span class="line">def divide(dividend: Double, divisor : Double) : Double = {
 </span><span class="line">    dividend / divisor
-</span><span class="line">}</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>In order to handle the case when exception happens, we should wrap the computation within a Try monad. So the code should be </p>
 

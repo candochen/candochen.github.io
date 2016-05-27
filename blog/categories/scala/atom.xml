@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scala | 观察 记录 思考]]></title>
   <link href="http://candochen.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-27T14:14:13+08:00</updated>
+  <updated>2016-05-27T14:16:10+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -26,17 +26,22 @@
 
 <h1 id="exception">Exception</h1>
 <p>Any developer should know that apart from the normal case, there exist exceptions. For example, 
-exception will occur if users enter 0 as the divisor in the below function.
-<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+exception will occur if users enter 0 as the divisor in the below function.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
 </span><span class='line'>
 </span><span class='line'>&lt;p>def divide(dividend: Double, divisor : Double) : Double = {
 </span><span class='line'>    dividend / divisor
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+</span><span class='line'>}&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>In order to handle the case when exception happens, we should wrap the computation within a Try monad. So the code should be </p>
 
