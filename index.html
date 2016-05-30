@@ -124,7 +124,9 @@
 
 <p>Let’s begin with simple functions, which return one or many values synchronously.  As shown in the below diagram, the getValue function returns a value of type T, and getValues returns an iterable of type T. </p>
 
-<p>Figure 1</p>
+<p>Figure 1
+| First cell|Second cell|Third cell
+| First | Second | Third |</p>
 
 <h1 id="exception">Exception</h1>
 <p>Developers should know that apart from the normal case, there exist exceptions. For example, 
@@ -241,9 +243,9 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 
 <p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering exceptions, the table becomes:</p>
 
-<p><img class="left" src="/images/20160527/stream.png" width="700" height="350" title="image" alt="images" /> </p>
-
 <h1 id="from-future-to-observable">From Future to Observable</h1>
+
+<p><img class="left" src="/images/20160527/stream.png" width="700" height="350" title="image" alt="images" /> </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
