@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scala | 观察 记录 思考]]></title>
   <link href="http://candochen.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-30T15:16:07+08:00</updated>
+  <updated>2016-05-30T15:26:25+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -182,9 +182,10 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 
 <p>Figure 3</p>
 
-<p><img class="left" src="/images/20160527/asyn1.png" width="700" height="350" title="‘image’ ‘images’" > </p>
+<p><img class="left" src="/images/20160527/asyn1.png" width="700" height="350" title="‘image’ ‘images’" >  </p>
 
-<p>I am leaving the question marks in the tables as an unknown region, which will be unveiled in the coming section.</p>
+<pre><code>I am leaving the question marks in the tables as an unknown region, which will be unveiled in the coming section.
+</code></pre>
 
 <h1 id="from-future-to-observable">From Future to Observable</h1>
 
@@ -197,6 +198,8 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 <p>Figure 4</p>
 
 <p><img class="left" src="/images/20160527/stream.png" width="800" height="500" title="‘image’ ‘images’" ></p>
+
+<p>The above figure shows a mapping on each elements in a stream.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -308,11 +311,15 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 
 <p><img class="left" src="/images/20160527/fileMonitor.png" width="800" height="500" title="‘image’ ‘images’" > </p>
 
-<p>By now, 4 essential effects have been described with example. Finally, the table becomes:</p>
+<p>By now, 4 essential effects have been described with examples, thus at last, the table becomes:</p>
 
 <p>Figure 6</p>
 
-<p><img class="left" src="/images/20160527/asyn2.png" width="700" height="350" title="‘image’ ‘images’" > </p>
+<p><img class="left" src="/images/20160527/asyn2.png" width="700" height="350" title="‘image’ ‘images’" ></p>
+
+<h1 id="wrap-up">Wrap-up</h1>
+<p>If we would like to consider exceptions we can involve Try in our code, if we would like to handle latency, future and observable may be our choice. Thinking the 4 essential effects in programming will help us design a better solution. </p>
+
 ]]></content>
   </entry>
   
