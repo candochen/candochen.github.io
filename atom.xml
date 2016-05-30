@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-30T11:09:35+08:00</updated>
+  <updated>2016-05-30T12:24:02+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -87,9 +87,11 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
   <p>A Future is an object holding a value which may become available at some point.</p>
 </blockquote>
 
-<p>Technically, </p>
+<p>In Scala, technically, Future[T] is a type which denotes future objects, whereas future is a method which creates and schedules an asynchronous computation, and then returns a future object which will be completed with the result of that computation. (from http://docs.scala-lang.org/overviews/core/futures.html)</p>
 
-<p>Let’s look at an example:</p>
+<p>This is best shown through an example.</p>
+
+<p>We assume that we want to use <strong>WeatherInfoRestService.getWeatherInfo</strong> to get the weather information, and we know that this function may take <strong>more time</strong> to complete, so we tend to a non-blocking way, making use of callbacks instead of typical blocking operations.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -142,12 +144,15 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 </span><span class="line">		
 </span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering latency, the table becomes:</p>
+<p>Til now, we know latency may occur in functions. In such case we make use of non-blocking, asynchronous way, by which system can do some other stuff while waiting for the future objects.  So after considering latency by using Future, the table becomes:</p>
 
-<p>Figure 3
-<img class="left" src="http://candochen.github.io/images/20160527/asyn1.png" width="700" height="350" title="image" alt="images" /> </p>
+<p>Figure 3</p>
+
+<p><img class="left" src="http://candochen.github.io/images/20160527/asyn1.png" width="700" height="350" title="image" alt="images" /> </p>
 
 <h1 id="from-future-to-observable">From Future to Observable</h1>
+
+<p>In the above section, we have shown that </p>
 
 <p>Figure 4
 <img class="left" src="http://candochen.github.io/images/20160527/stream.png" width="700" height="350" title="image" alt="images" /> </p>
