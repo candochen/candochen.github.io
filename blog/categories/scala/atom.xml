@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scala | 观察 记录 思考]]></title>
   <link href="http://candochen.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-30T14:44:09+08:00</updated>
+  <updated>2016-05-30T14:46:50+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -195,7 +195,7 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 <p>Assume that I want to monitor a specific file directory where changes on the file directory should be notified, such like changes on a file. System should emit a stream of events, and users of the stream will map, filter, and reduce etc., the stream to fulfill their business needs.</p>
 
 <p>Figure 4
-<img class="left" src="/images/20160527/stream.png" width="700" height="350" title="‘image’ ‘images’" > </p>
+<img class="left" src="/images/20160527/stream.png" width="800" height="500" title="‘image’ ‘images’" > </p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -304,7 +304,7 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 <p>Any changes on xml files will be printed on the console like </p>
 
 <p>Figure 5
-<img class="left" src="/images/20160527/fileMonitor.png" width="700" height="350" title="‘image’ ‘images’" > </p>
+<img class="left" src="/images/20160527/fileMonitor.png" width="800" height="500" title="‘image’ ‘images’" > </p>
 
 <p>:
 Figure 6
