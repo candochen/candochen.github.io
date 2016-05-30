@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scala | 观察 记录 思考]]></title>
   <link href="http://candochen.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-30T13:38:10+08:00</updated>
+  <updated>2016-05-30T13:42:54+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -184,12 +184,11 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 
 <p><img class="left" src="/images/20160527/asyn1.png" width="700" height="350" title="‘image’ ‘images’" > </p>
 
+<p>I am leaving the question marks in the tables as an unknown region, which will be unveiled in the coming sections.</p>
+
 <h1 id="from-future-to-observable">From Future to Observable</h1>
 
 <p>In the above section, we have shown that Futures provide a way to reason about performing many operations in parallel– in an efficient and non-blocking way. However, a future can only be assigned once. Once a Future object is given a value or an exception, it becomes in effect immutable. It cannot cover the case that many values being delivered one by one in the future. </p>
-
-<p>Figure 4
-<img class="left" src="/images/20160527/stream.png" width="700" height="350" title="‘image’ ‘images’" > </p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -285,6 +284,9 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 </span><span class='line'>&lt;/code>&lt;/pre>
 </span><span class='line'>
 </span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Figure 4
+<img class="left" src="/images/20160527/stream.png" width="700" height="350" title="‘image’ ‘images’" > </p>
 
 <p>Figure 4
 <img class="left" src="/images/20160527/asyn2.png" width="700" height="350" title="‘image’ ‘images’" > </p>
