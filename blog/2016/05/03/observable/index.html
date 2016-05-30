@@ -121,9 +121,60 @@
 
 <p>Let’s begin with simple functions, which return one or many values synchronously.  As shown in the below diagram, the getValue function returns a value of type T, and getValues returns an iterable of type T. </p>
 
-<p>Figure 1
-| First cell|Second cell|Third cell
-| First | Second | Third |</p>
+<p>Figure 1</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Default aligned</th>
+      <th style="text-align: left">Left aligned</th>
+      <th style="text-align: center">Center aligned</th>
+      <th style="text-align: right">Right aligned</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>First body part</td>
+      <td style="text-align: left">Second cell</td>
+      <td style="text-align: center">Third cell</td>
+      <td style="text-align: right">fourth cell</td>
+    </tr>
+    <tr>
+      <td>Second line</td>
+      <td style="text-align: left">foo</td>
+      <td style="text-align: center"><strong>strong</strong></td>
+      <td style="text-align: right">baz</td>
+    </tr>
+    <tr>
+      <td>Third line</td>
+      <td style="text-align: left">quux</td>
+      <td style="text-align: center">baz</td>
+      <td style="text-align: right">bar</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>Second body</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+    <tr>
+      <td>2 line</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Footer row</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tfoot>
+</table>
 
 <h1 id="exception">Exception</h1>
 <p>Developers should know that apart from the normal case, there exist exceptions. For example, 
