@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-30T10:06:19+08:00</updated>
+  <updated>2016-05-30T10:22:47+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -25,7 +25,7 @@
 <p>Figure 1</p>
 
 <h1 id="exception">Exception</h1>
-<p>Any developer should know that apart from the normal case, there exist exceptions. For example, 
+<p>Developers should know that apart from the normal case, there exist exceptions. For example, 
 exception will occur if users enter 0 as the divisor in the below function.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
@@ -59,9 +59,10 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 </span><span class="line">	case Failure(e) =&gt; println(e)
 </span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Likewise, a function returning many values may have exceptions as well. In such case, what we need to do is to define the function as 
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">def getValue: Try[Iterable[T]]</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
+<p>Likewise, a function returning many values may have exceptions as well. In such case, what we need to do is to define the function as </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">def getValue: Try[Iterable[T]]</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering exceptions, the table becomes:</p>
 
@@ -110,9 +111,6 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 <span class="line-number">23</span>
 <span class="line-number">24</span>
 <span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
 </pre></td><td class="code"><pre><code class=""><span class="line">import scala.concurrent._
 </span><span class="line">
 </span><span class="line">import ExecutionContext.Implicits.global
@@ -120,20 +118,17 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 </span><span class="line">import scala.util.{Success, Failure}
 </span><span class="line">
 </span><span class="line">object Weather extends App{
-</span><span class="line">		
-</span><span class="line">		//val content = Source.fromURL("www.weather.com.cn/data/sk/101280601.html").mkString
+</span><span class="line">
 </span><span class="line">		val weatherFuture  = Future {
+</span><span class="line">			//WeatherInfoRestService.getWeatherInfo is a function that requests resource from internet via REST
 </span><span class="line">			WeatherInfoRestService.getWeatherInfo
 </span><span class="line">		}
 </span><span class="line">		
 </span><span class="line">		
 </span><span class="line">		//register a callback
 </span><span class="line">		weatherFuture onSuccess {
-</span><span class="line">		  case x =&gt; {
-</span><span class="line">			  			println(x.weatherinfo.city)
-</span><span class="line">			  			println(x.weatherinfo.time)
-</span><span class="line">			  			println(x.weatherinfo.temp)
-</span><span class="line">		  			} 
+</span><span class="line">		  case x =&gt; println(x)
+</span><span class="line">			  		 
 </span><span class="line">		}
 </span><span class="line">	  
 </span><span class="line">		weatherFuture onFailure {
@@ -144,9 +139,96 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 
 <p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering exceptions, the table becomes:</p>
 
-<p>/images/20141016/clipboard.png</p>
+<p><img class="left" src="http://candochen.github.io/images/20160527/stream.png" width="700" height="350" title="image" alt="images" /> </p>
 
-<p><img class="left" src="http://candochen.github.io/images/20160527/stream.png" width="350" height="350" title="image" alt="images" /> (图片来源自wikipedia)</p>
+<h1 id="from-future-to-observable">From Future to Observable</h1>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">package akka
+</span><span class="line">import org.apache.commons.io.monitor._
+</span><span class="line">import scala.util._
+</span><span class="line">import java.io.File
+</span><span class="line">import rx.lang.scala._
+</span><span class="line">
+</span><span class="line">object FileMonitor extends App {
+</span><span class="line">  
+</span><span class="line">	def monitor(directory: String): Observable[String] = {
+</span><span class="line">	    Observable.create {
+</span><span class="line">	    	observer =&gt; 
+</span><span class="line">	    	  val fileMonitor = new FileAlterationMonitor(1000)
+</span><span class="line">	    	  val fileObserver = new FileAlterationObserver(directory)
+</span><span class="line">	    	  val fileLsnr = new FileAlterationListenerAdaptor{
+</span><span class="line">	    		 override def onFileChange(file: File){
+</span><span class="line">	    		   observer.onNext(file.getCanonicalPath())
+</span><span class="line">	    		 }
+</span><span class="line">	    		 
+</span><span class="line">	    		 override def onFileCreate(file: File){
+</span><span class="line">	    		   observer.onNext(file.getCanonicalPath())
+</span><span class="line">	    		 }
+</span><span class="line">	    		 
+</span><span class="line">	    		 override def onFileDelete(file: File){
+</span><span class="line">	    		   observer.onNext(file.getCanonicalPath())
+</span><span class="line">	    		 }
+</span><span class="line">	    	  }
+</span><span class="line">	    	 fileObserver.addListener(fileLsnr)
+</span><span class="line">	    	 fileMonitor.addObserver(fileObserver)
+</span><span class="line">	    	 fileMonitor.start()
+</span><span class="line">	    	 Subscription ()
+</span><span class="line">	    }
+</span><span class="line">	}
+</span><span class="line">	
+</span><span class="line">	//Test to monitor a directory
+</span><span class="line">	val o = monitor("D:\\src")
+</span><span class="line">	o.filter(x =&gt; x.endsWith("xml")).subscribe{
+</span><span class="line">	  x =&gt; println(x)
+</span><span class="line">	}
+</span><span class="line">	
+</span><span class="line">	o.filter(x =&gt; x.endsWith("txt")).subscribe{
+</span><span class="line">	  x =&gt; println(x)
+</span><span class="line">	}
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <h1 id="wrap-up">Wrap-up</h1>
 
