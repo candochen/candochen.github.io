@@ -249,11 +249,18 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 
 <p><img class="left" src="/images/20160527/asyn1.png" width="700" height="350" title="image" alt="images" /> </p>
 
-<p>I am leaving the question marks in the tables as an unknown region, which will be unveiled in the coming sections.</p>
+<p>I am leaving the question marks in the tables as an unknown region, which will be unveiled in the coming section.</p>
 
 <h1 id="from-future-to-observable">From Future to Observable</h1>
 
 <p>In the above section, we have shown that Futures provide a way to reason about performing many operations in parallel– in an efficient and non-blocking way. However, a future can only be assigned once. Once a Future object is given a value or an exception, it becomes in effect immutable. It cannot cover the case that many values being delivered one by one in the future. </p>
+
+<p>Let’s go through an example to make it clear. </p>
+
+<p>Assume that I want to monitor a specific file directory where changes on the file directory should be notified, such like changes on a file. System should emit a stream of events, and users of the stream will map, filter, and reduce etc., the stream to fulfill their business needs.</p>
+
+<p>Figure 4
+<img class="left" src="/images/20160527/stream.png" width="700" height="350" title="image" alt="images" /> </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -293,20 +300,19 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 <span class="line-number">36</span>
 <span class="line-number">37</span>
 <span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">package akka
-</span><span class="line">import org.apache.commons.io.monitor._
+</pre></td><td class="code"><pre><code class=""><span class="line">import org.apache.commons.io.monitor._
+</span><span class="line">
 </span><span class="line">import scala.util._
+</span><span class="line">
 </span><span class="line">import java.io.File
+</span><span class="line">
 </span><span class="line">import rx.lang.scala._
 </span><span class="line">
 </span><span class="line">object FileMonitor extends App {
 </span><span class="line">  
 </span><span class="line">	def monitor(directory: String): Observable[String] = {
+</span><span class="line">		
+</span><span class="line">		//To create an observable of file directory, which emits a stream of events
 </span><span class="line">	    Observable.create {
 </span><span class="line">	    	observer =&gt; 
 </span><span class="line">	    	  val fileMonitor = new FileAlterationMonitor(1000)
@@ -316,13 +322,6 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 </span><span class="line">	    		   observer.onNext(file.getCanonicalPath())
 </span><span class="line">	    		 }
 </span><span class="line">	    		 
-</span><span class="line">	    		 override def onFileCreate(file: File){
-</span><span class="line">	    		   observer.onNext(file.getCanonicalPath())
-</span><span class="line">	    		 }
-</span><span class="line">	    		 
-</span><span class="line">	    		 override def onFileDelete(file: File){
-</span><span class="line">	    		   observer.onNext(file.getCanonicalPath())
-</span><span class="line">	    		 }
 </span><span class="line">	    	  }
 </span><span class="line">	    	 fileObserver.addListener(fileLsnr)
 </span><span class="line">	    	 fileMonitor.addObserver(fileObserver)
@@ -333,26 +332,32 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 </span><span class="line">	
 </span><span class="line">	//Test to monitor a directory
 </span><span class="line">	val o = monitor("D:\\src")
+</span><span class="line">	
 </span><span class="line">	o.filter(x =&gt; x.endsWith("xml")).subscribe{
-</span><span class="line">	  x =&gt; println(x)
+</span><span class="line">	  x =&gt; println(x + " changed")
 </span><span class="line">	}
 </span><span class="line">	
-</span><span class="line">	o.filter(x =&gt; x.endsWith("txt")).subscribe{
-</span><span class="line">	  x =&gt; println(x)
-</span><span class="line">	}
 </span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Figure 4
-<img class="left" src="/images/20160527/stream.png" width="700" height="350" title="image" alt="images" /> </p>
+<p>In the above code example, I monitor the file directory D:\src, and I only care about xml files, so I filtered the stream by</p>
 
-<p>Figure 4
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">o.filter(x =&gt; x.endsWith("xml")).subscribe{
+</span><span class="line">	  x =&gt; println(x)
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Any changes on xml files will be printed on the console like </p>
+
+<p>Figure 5
+<img class="left" src="/images/20160527/fileMonitor.png" width="700" height="350" title="image" alt="images" /> </p>
+
+<p>:
+Figure 6
 <img class="left" src="/images/20160527/asyn2.png" width="700" height="350" title="image" alt="images" /> </p>
 
 <h1 id="wrap-up">Wrap-up</h1>
-
-<p>In computer programming, </p>
-
-<p>I am gonna deep-dive into each </p>
 </div>
 
 
