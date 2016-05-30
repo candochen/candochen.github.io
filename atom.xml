@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-30T11:03:30+08:00</updated>
+  <updated>2016-05-30T11:05:39+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -67,6 +67,9 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 </pre></td><td class="code"><pre><code class=""><span class="line">def getValue: Try[Iterable[T]]</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering exceptions, the table becomes:</p>
+
+<p>Figure 2
+<img class="left" src="http://candochen.github.io/images/20160527/syn1.png" width="700" height="350" title="image" alt="images" /> </p>
 
 <h1 id="latency">Latency</h1>
 
