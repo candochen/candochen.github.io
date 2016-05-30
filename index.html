@@ -171,7 +171,7 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 <p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering exceptions, the table becomes:</p>
 
 <p>Figure 2
-<img class="left" src="/images/20160527/syn1.png" width="700" height="350" title="image" alt="images" /> </p>
+<img class="left" src="/images/20160527/syn2.png" width="700" height="350" title="image" alt="images" /> </p>
 
 <h1 id="latency">Latency</h1>
 
@@ -244,11 +244,15 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 </span><span class="line">		
 </span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering exceptions, the table becomes:</p>
+<p>Til now, we know that functions may have exceptions. In order to notify users of the function, developers should have computation wrapped within a Try monad. So after considering latency, the table becomes:</p>
+
+<p>Figure 3
+<img class="left" src="/images/20160527/asyn1.png" width="700" height="350" title="image" alt="images" /> </p>
 
 <h1 id="from-future-to-observable">From Future to Observable</h1>
 
-<p><img class="left" src="/images/20160527/stream.png" width="700" height="350" title="image" alt="images" /> </p>
+<p>Figure 4
+<img class="left" src="/images/20160527/stream.png" width="700" height="350" title="image" alt="images" /> </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -336,6 +340,9 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 </span><span class="line">	  x =&gt; println(x)
 </span><span class="line">	}
 </span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Figure 4
+<img class="left" src="/images/20160527/asyn2.png" width="700" height="350" title="image" alt="images" /> </p>
 
 <h1 id="wrap-up">Wrap-up</h1>
 
