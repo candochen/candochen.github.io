@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scala | 观察 记录 思考]]></title>
   <link href="http://candochen.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-30T10:47:50+08:00</updated>
+  <updated>2016-05-30T10:49:35+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -75,6 +75,33 @@
       <td style="text-align: right"> </td>
     </tr>
   </tfoot>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tables</th>
+      <th style="text-align: center">Are</th>
+      <th style="text-align: right">Cool</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>col 1 is</td>
+      <td style="text-align: center">left-aligned</td>
+      <td style="text-align: right">$1600</td>
+    </tr>
+    <tr>
+      <td>col 2 is</td>
+      <td style="text-align: center">centered</td>
+      <td style="text-align: right">$12</td>
+    </tr>
+    <tr>
+      <td>col 3 is</td>
+      <td style="text-align: center">right-aligned</td>
+      <td style="text-align: right">$1</td>
+    </tr>
+  </tbody>
 </table>
 
 <h1 id="exception">Exception</h1>
