@@ -1,4 +1,123 @@
-<p>刚看到标题的朋友们会以为我会写一篇励志文章，因为Promise me a Future翻译过来就是”给我承诺一个未来”。但是这篇文章是关于计算机技术的。Promise和Future是并发编程里一个重要的概念，因为它们太直观了，所以我不得不用这个标题。</p>
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Promise Me a Future - 观察 记录 思考</title>
+  <meta name="author" content="Cando">
+
+  
+  <meta name="description" content="刚看到标题的朋友们会以为我会写一篇励志文章，因为Promise me a Future翻译过来就是”给我承诺一个未来”。但是这篇文章是关于计算机技术的。Promise和Future是并发编程里一个重要的概念，因为它们太直观了，所以我不得不用这个标题。 先说Future。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://candochen.github.io/blog/2016/07/22/promise">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="观察 记录 思考" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  <!--
+-->
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">观察 记录 思考</a></h1>
+  
+    <h2>关于计算机、数学、英语和历史的点滴</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:candochen.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Promise Me a Future</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-07-22T13:09:50+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2016</span></span> <span class='time'>1:09 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>刚看到标题的朋友们会以为我会写一篇励志文章，因为Promise me a Future翻译过来就是”给我承诺一个未来”。但是这篇文章是关于计算机技术的。Promise和Future是并发编程里一个重要的概念，因为它们太直观了，所以我不得不用这个标题。</p>
 
 <p>先说Future。Future是一种异步计算方法。它的一种比较直观的解释是: Future用来执行一段程序，它在未来某个时刻返回一个值。以Scala程序作为例子，下面的程序创建一个Future对象，它包含一段程序代码，程序代码运行结束之后，返回一个值给调用端。由于是异步编程，调用端需要为Future注册回调函数（Callback）。假如我们有必要对回调函数做个解释的话，我们可以这么说, callback function is like “you do this, you do that, after completion, call me back”， 翻译过来就是”你忙完了，告我一声”。</p>
 
@@ -266,3 +385,165 @@
 </span><span class="line">Failure java.lang.IllegalStateException: Sell out!</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>上面的例子很直观，就是客户下订单Order，商店Shop处理订单。 同时我们看到下订单Order.place是得到一个由承诺创建的Future。而兑现承诺(Promise)是由Shop来完成。我们通过Promise完成了调用端对Future的解耦。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Cando</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-07-22T13:09:50+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2016</span></span> <span class='time'>1:09 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/scala/'>scala</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/05/03/observable/" title="Previous Post: Observable">&laquo; Observable</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>发表评论</h1>
+	<div id="comments" aria-live="polite"><!-- 多说评论框 start -->
+
+<div class="ds-thread" data-thread-key="/blog/2016/07/22/promise" data-title="Promise me a Future" data-url="//blog/2016/07/22/promise/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"candochen"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end --></div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/07/22/promise/">Promise Me a Future</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/03/observable/">Observable</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/14/what-is-e/">数学常数中的e是什么</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/03/scala-3/">Scala 点滴 (3)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/01/learning-how-to-learn-4/">如何学习 (4)</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/english/index.html">  english (2) </a>
+      </li>
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/others/index.html">  others (2) </a>
+      </li>
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/learn/index.html">  learn (4) </a>
+      </li>
+    
+	
+      <li class="post">
+        <a class="list-group-item active" href="/blog/categories/scala/index.html">  scala (5) </a>
+      </li>
+    
+  </ul>
+</section><section>
+<h1>最近评论</h1>
+<ul class="ds-recent-comments" data-num-items="10">
+</ul>
+<!--多说js加载开始，一个页面只需要加载一次 -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"candochen"};
+(function() {
+var ds = document.createElement('script');
+ds.type = 'text/javascript';
+ds.async = true;ds.src = 'http://static.duoshuo.com/embed.js';
+ds.charset = 'UTF-8';
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+<!--多说js加载结束，一个页面只需要加载一次 -->
+</section>
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Cando -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
