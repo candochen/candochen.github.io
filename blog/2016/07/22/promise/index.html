@@ -2,8 +2,9 @@
 
 <p>先说Future。Future是一种异步计算方法。它的一种比较直观的解释是: Future用来执行一段程序，它在未来某个时刻返回一个值。以Scala程序作为例子，下面的程序创建一个Future对象，它包含一段程序代码，程序代码运行结束之后，返回一个值给调用端。由于是异步编程，调用端需要为Future注册回调函数（Callback）。假如我们有必要对回调函数做个解释的话，我们可以这么说, callback function is like “you do this, you do that, after completion, call me back”， 翻译过来就是”你忙完了，告我一声”。</p>
 
-<p>在下段代码中，假如weatherFuture成功执行，那么onSuccess回调函数就会执行；假如出现了错误，onFailure回调函数就会执行。可以这么说Future是未来某个值的placeholder。
-&lt;div class='bogus-wrapper'&gt;<notextile><figure class="code">&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;<span class="line-number">1</span>
+<p>在下段代码中，假如weatherFuture成功执行，那么onSuccess回调函数就会执行；假如出现了错误，onFailure回调函数就会执行。可以这么说Future是未来某个值的placeholder。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -16,7 +17,7 @@
 <span class="line-number">11</span>
 <span class="line-number">12</span>
 <span class="line-number">13</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;<code class=""><span class="line">val weatherFuture = Future {
+</pre></td><td class="code"><pre><code class=""><span class="line">val weatherFuture = Future {
 </span><span class="line">    WheaterInfoRestService.getWeatherInfo
 </span><span class="line">}
 </span><span class="line">
@@ -28,7 +29,7 @@
 </span><span class="line">
 </span><span class="line">weatherFuture onFailure{
 </span><span class="line">    case e =&gt; println(e)
-</span><span class="line">}</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>如果说Future是未来某个值的placeholder，那么Promise就是Future的placeholder。我们用例子来说明，下面这段程序模拟下订单的情况:</p>
 
@@ -241,11 +242,16 @@
 
 <p>运行的结果是这样的</p>
 
-<p>place order!
-Place another order
-Begin process order
-Success You got meal!
-Begin process order
-Failure java.lang.IllegalStateException: Sell out!</p>
+<p>place order!</p>
+
+<p>Place another order</p>
+
+<p>Begin process order</p>
+
+<p>Success You got meal!</p>
+
+<p>Begin process order</p>
+
+<p>Failure java.lang.IllegalStateException: Sell out!</p>
 
 <p>上面的例子很直观，就是客户下订单Order，商店Shop处理订单。 同时我们看到下订单Order.place是得到一个由承诺创建的Future。而兑现承诺(Promise)是由Shop来完成。我们通过Promise完成了调用端对Future的解耦。</p>
