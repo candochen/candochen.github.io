@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-05-30T15:26:25+08:00</updated>
+  <updated>2016-07-22T13:01:18+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -12,6 +12,258 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Promise]]></title>
+    <link href="http://candochen.github.io/blog/2016/07/22/promise/"/>
+    <updated>2016-07-22T00:00:00+08:00</updated>
+    <id>http://candochen.github.io/blog/2016/07/22/promise</id>
+    <content type="html"><![CDATA[<p>刚看到标题的朋友们会以为我会写一篇励志文章，因为Promise me a Future翻译过来就是”给我承诺一个未来”。但是这篇文章是关于计算机技术的。Promise和Future是并发编程里一个重要的概念，因为它们太直观了，所以我不得不用这个标题。</p>
+
+<p>先说Future。Future是一种异步计算方法。它的一种比较直观的解释是: Future用来执行一段程序，它在未来某个时刻返回一个值。以Scala程序作为例子，下面的程序创建一个Future对象，它包含一段程序代码，程序代码运行结束之后，返回一个值给调用端。由于是异步编程，调用端需要为Future注册回调函数（Callback）。假如我们有必要对回调函数做个解释的话，我们可以这么说, callback function is like “you do this, you do that, after completion, call me back”， 翻译过来就是”你忙完了，告我一声”。</p>
+
+<p>在下段代码中，假如weatherFuture成功执行，那么onSuccess回调函数就会执行；假如出现了错误，onFailure回调函数就会执行。可以这么说Future是未来某个值的placeholder。
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">val weatherFuture = Future {
+</span><span class="line">    WheaterInfoRestService.getWeatherInfo
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">weatherFuture onSuccess {
+</span><span class="line">    case x =&gt; {
+</span><span class="line">        println("get the weather information successfully")
+</span><span class="line">    }
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">weatherFuture onFailure{
+</span><span class="line">    case e =&gt; println(e)
+</span><span class="line">}</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
+
+<p>如果说Future是未来某个值的placeholder，那么Promise就是Future的placeholder。我们用例子来说明，下面这段程序模拟下订单的情况:</p>
+
+<ol>
+  <li>
+    <p>首先我们要有个订单类Order, 然后我们还需要Shop类代表处理订单的商店。Order类的一个主要方法是place，它通过Promise对象返回一个Future。注意观察，这个future是没有内容的，也就是还没有实现。</p>
+  </li>
+  <li>
+    <p>接着我们看看Shop，它只有一个方法process。通过这个方法，Shop对象处理订单。在处理的过程中，我们创建一个Future对象，换句话说，在process方法中，我们创建一个Future来兑现一个Promise(承诺)。这样做有个非常重要的好处–把承诺和兑现承诺分开，用计算机行话说就是”解耦和“。</p>
+  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">class Order[String](name: String){
+</span><span class="line">  val p = Promise[String]()
+</span><span class="line"> 
+</span><span class="line">  def getPromise = p
+</span><span class="line">  
+</span><span class="line">  def getName = name
+</span><span class="line">  
+</span><span class="line">  //这个Future还没有实现
+</span><span class="line">，p是这个future的placeholder
+</span><span class="line">  def place = p.future
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">class Shop{
+</span><span class="line"> 
+</span><span class="line">  def process(order : Order[String]) = {
+</span><span class="line">    val orderName = order.getName
+</span><span class="line">    val p = order.getPromise
+</span><span class="line">
+</span><span class="line">    //创建一个兑现承诺的Future
+</span><span class="line">    Future {
+</span><span class="line">     println("Begin process order")
+</span><span class="line">     if (orderName.equals("Meal")){
+</span><span class="line">          //兑现承诺
+</span><span class="line">          p success "You got meal!"
+</span><span class="line">     }else{
+</span><span class="line">          //兑现不了承诺时候给一个理由
+</span><span class="line">          p failure new IllegalStateException("Sell out!")
+</span><span class="line">     }
+</span><span class="line">    }
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们来看看放在一起是怎样的。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">package akka
+</span><span class="line">
+</span><span class="line">import scala.concurrent.{Future, Promise}
+</span><span class="line">import scala.concurrent.ExecutionContext.Implicits.global
+</span><span class="line">import java.util.Date
+</span><span class="line">
+</span><span class="line">class Order[String](name: String){ 
+</span><span class="line">  val p = Promise[String]()
+</span><span class="line"> 
+</span><span class="line">  def getPromise = p
+</span><span class="line">  
+</span><span class="line">  def getName = name
+</span><span class="line">  
+</span><span class="line">  //这个Future还没有实现
+</span><span class="line">  def place = p.future
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">class Shop{
+</span><span class="line"> 
+</span><span class="line">  def process(order : Order[String]) = {
+</span><span class="line">    val orderName = order.getName
+</span><span class="line">    val p = order.getPromise
+</span><span class="line">
+</span><span class="line">    Future { 
+</span><span class="line">     println("Begin process order")
+</span><span class="line">     if (orderName.equals("Meal")){
+</span><span class="line">          p success "You got meal!"
+</span><span class="line">     }else{
+</span><span class="line">          p failure new IllegalStateException("Sell out!")
+</span><span class="line">     }
+</span><span class="line">    }
+</span><span class="line">  }
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">object PromiseFuture extends App{
+</span><span class="line"> val order = new Order("Meal")
+</span><span class="line"> 
+</span><span class="line"> println("place order!")
+</span><span class="line"> val orderFuture = order.place
+</span><span class="line"> 
+</span><span class="line"> orderFuture onSuccess{
+</span><span class="line">   case x =&gt; println("Success " + x)
+</span><span class="line"> }
+</span><span class="line"> 
+</span><span class="line"> orderFuture onFailure{
+</span><span class="line">   case e =&gt; println("Failure " + e)
+</span><span class="line"> }
+</span><span class="line"> 
+</span><span class="line"> val shop = new Shop
+</span><span class="line"> shop.process(order)
+</span><span class="line"> 
+</span><span class="line"> val anotherOrder = new Order("Cake")
+</span><span class="line"> println("Place another order！")
+</span><span class="line"> val anotherOrderFuture = anotherOrder.place
+</span><span class="line"> 
+</span><span class="line"> anotherOrderFuture onSuccess{
+</span><span class="line">   case x =&gt; println("Success " + x)
+</span><span class="line"> }
+</span><span class="line"> 
+</span><span class="line"> anotherOrderFuture onFailure{
+</span><span class="line">   case e =&gt; println("Failure " + e)
+</span><span class="line"> }
+</span><span class="line"> 
+</span><span class="line"> shop.process(anotherOrder)
+</span><span class="line"> 
+</span><span class="line"> Thread.sleep(10000)
+</span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>运行的结果是这样的</p>
+
+<p>上面的例子很直观，就是客户下订单Order，商店Shop处理订单。 同时我们看到下订单Order.place是得到一个由承诺创建的Future。而兑现承诺(Promise)是由Shop来完成。我们通过Promise完成了调用端对Future的解耦。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Observable]]></title>
