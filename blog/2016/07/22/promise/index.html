@@ -241,4 +241,11 @@
 
 <p>运行的结果是这样的</p>
 
+<p>place order!
+Place another order
+Begin process order
+Success You got meal!
+Begin process order
+Failure java.lang.IllegalStateException: Sell out!</p>
+
 <p>上面的例子很直观，就是客户下订单Order，商店Shop处理订单。 同时我们看到下订单Order.place是得到一个由承诺创建的Future。而兑现承诺(Promise)是由Shop来完成。我们通过Promise完成了调用端对Future的解耦。</p>

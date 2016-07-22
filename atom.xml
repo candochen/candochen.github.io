@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-07-22T13:01:18+08:00</updated>
+  <updated>2016-07-22T13:03:59+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -260,6 +260,13 @@
 </span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>运行的结果是这样的</p>
+
+<p>place order!
+Place another order
+Begin process order
+Success You got meal!
+Begin process order
+Failure java.lang.IllegalStateException: Sell out!</p>
 
 <p>上面的例子很直观，就是客户下订单Order，商店Shop处理订单。 同时我们看到下订单Order.place是得到一个由承诺创建的Future。而兑现承诺(Promise)是由Shop来完成。我们通过Promise完成了调用端对Future的解耦。</p>
 ]]></content>
