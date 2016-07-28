@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-07-22T13:15:38+08:00</updated>
+  <updated>2016-07-28T20:00:40+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -558,7 +558,7 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 
 <p>先说利息是什么。简单来说利息就是钱生的钱。假如你存1万块钱到银行，银行给你的年利率是100%（这是假设的，别做梦了），那么一年之后你拿到的钱是2万，可以根据这个公式算得 </p>
 
-<script type="math/tex; mode=display">本金*(1+100\%)^1=2</script>
+<script type="math/tex; mode=display">本金*(1+1)^1=2</script>
 
 <p>现在你可能要想一年计息一次，我可以拿到2万，假如计息两次呢？于是你跟银行说，我要一年计息两次，银行说好吧，一年的利息是100%，那么半年的利息是50%，一年计息2次，你可以得</p>
 
@@ -566,7 +566,7 @@ exception will occur if users enter 0 as the divisor in the below function.</p>
 
 <p>你感觉到赚了，于是继续提要求，一年计息4次，银行说好吧，一年的利息是100%，那么一季度的利息是25%，一年计息4次，你可以得到</p>
 
-<script type="math/tex; mode=display">本金*(1+\frac{1}{2})^4=2.44</script>
+<script type="math/tex; mode=display">本金*(1+\frac{1}{4})^4=2.44</script>
 
 <p>这次你感觉赚了，但是增长少了，上次增长2.25-2 = 0.25，这次增长2.44 - 2.25 = 0.21。你在想假如我一年计息12次，365次，甚至每秒都计息，一年以后你会得到多少钱呢？你发现多计息一次，你就多赚一点，但是赚到的比上次少了点，你想假如无限次计息, 那么一年之后最多你能拿到多少钱呢？是否无无限多呢，还是存在某个极限？</p>
 
