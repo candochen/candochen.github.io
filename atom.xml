@@ -4,7 +4,7 @@
   <title><![CDATA[观察 记录 思考]]></title>
   <link href="http://candochen.github.io/atom.xml" rel="self"/>
   <link href="http://candochen.github.io/"/>
-  <updated>2016-07-28T20:00:40+08:00</updated>
+  <updated>2016-07-28T20:20:06+08:00</updated>
   <id>http://candochen.github.io/</id>
   <author>
     <name><![CDATA[Cando]]></name>
@@ -91,36 +91,34 @@
 <span class="line-number">27</span>
 <span class="line-number">28</span>
 <span class="line-number">29</span>
-<span class="line-number">30</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">class Order[String](name: String){
-</span><span class="line">  val p = Promise[String]()
-</span><span class="line"> 
-</span><span class="line">  def getPromise = p
+</pre></td><td class="code"><pre><code class=""><span class="line">class Order[String](val name: String){
+</span><span class="line">	val promise = Promise[String]()
 </span><span class="line">  
-</span><span class="line">  def getName = name
-</span><span class="line">  
+</span><span class="line">    promise.future onSuccess{
+</span><span class="line">	  case x =&gt; println("Success " + x)
+</span><span class="line">	}
+</span><span class="line">	
+</span><span class="line">	promise.future onFailure{
+</span><span class="line">	  case e =&gt; println("Failure " + e)
+</span><span class="line">	}
+</span><span class="line">	
 </span><span class="line">  //这个Future还没有实现
-</span><span class="line">，p是这个future的placeholder
-</span><span class="line">  def place = p.future
+</span><span class="line">  def place = promise.future
 </span><span class="line">}
 </span><span class="line">
-</span><span class="line">class Shop{
+</span><span class="line">object Shop{
 </span><span class="line"> 
 </span><span class="line">  def process(order : Order[String]) = {
-</span><span class="line">    val orderName = order.getName
-</span><span class="line">    val p = order.getPromise
-</span><span class="line">
-</span><span class="line">    //创建一个兑现承诺的Future
+</span><span class="line">    val p = order.promise
 </span><span class="line">    Future {
-</span><span class="line">     println("Begin process order")
-</span><span class="line">     if (orderName.equals("Meal")){
-</span><span class="line">          //兑现承诺
-</span><span class="line">          p success "You got meal!"
-</span><span class="line">     }else{
-</span><span class="line">          //兑现不了承诺时候给一个理由
-</span><span class="line">          p failure new IllegalStateException("Sell out!")
-</span><span class="line">     }
+</span><span class="line">    	println("Begin process order")
+</span><span class="line">    	if (order.name equals "Meal"){
+</span><span class="line">    		p success "You got meal!"
+</span><span class="line">    	}else{
+</span><span class="line">    		p failure new IllegalStateException("Sell out!")
+</span><span class="line">    	}
 </span><span class="line">    }
+</span><span class="line">  }
 </span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>我们来看看放在一起是怎样的。</p>
@@ -142,122 +140,22 @@
 <span class="line-number">15</span>
 <span class="line-number">16</span>
 <span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-<span class="line-number">63</span>
-<span class="line-number">64</span>
-<span class="line-number">65</span>
-<span class="line-number">66</span>
-<span class="line-number">67</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">package akka
-</span><span class="line">
-</span><span class="line">import scala.concurrent.{Future, Promise}
+</pre></td><td class="code"><pre><code class=""><span class="line">import scala.concurrent.{Future, Promise}
 </span><span class="line">import scala.concurrent.ExecutionContext.Implicits.global
 </span><span class="line">import java.util.Date
 </span><span class="line">
-</span><span class="line">class Order[String](name: String){ 
-</span><span class="line">  val p = Promise[String]()
-</span><span class="line"> 
-</span><span class="line">  def getPromise = p
-</span><span class="line">  
-</span><span class="line">  def getName = name
-</span><span class="line">  
-</span><span class="line">  //这个Future还没有实现
-</span><span class="line">  def place = p.future
-</span><span class="line">}
-</span><span class="line">
-</span><span class="line">class Shop{
-</span><span class="line"> 
-</span><span class="line">  def process(order : Order[String]) = {
-</span><span class="line">    val orderName = order.getName
-</span><span class="line">    val p = order.getPromise
-</span><span class="line">
-</span><span class="line">    Future { 
-</span><span class="line">     println("Begin process order")
-</span><span class="line">     if (orderName.equals("Meal")){
-</span><span class="line">          p success "You got meal!"
-</span><span class="line">     }else{
-</span><span class="line">          p failure new IllegalStateException("Sell out!")
-</span><span class="line">     }
-</span><span class="line">    }
-</span><span class="line">  }
-</span><span class="line">}
-</span><span class="line">
 </span><span class="line">object PromiseFuture extends App{
-</span><span class="line"> val order = new Order("Meal")
-</span><span class="line"> 
-</span><span class="line"> println("place order!")
-</span><span class="line"> val orderFuture = order.place
-</span><span class="line"> 
-</span><span class="line"> orderFuture onSuccess{
-</span><span class="line">   case x =&gt; println("Success " + x)
-</span><span class="line"> }
-</span><span class="line"> 
-</span><span class="line"> orderFuture onFailure{
-</span><span class="line">   case e =&gt; println("Failure " + e)
-</span><span class="line"> }
-</span><span class="line"> 
-</span><span class="line"> val shop = new Shop
-</span><span class="line"> shop.process(order)
-</span><span class="line"> 
-</span><span class="line"> val anotherOrder = new Order("Cake")
-</span><span class="line"> println("Place another order！")
-</span><span class="line"> val anotherOrderFuture = anotherOrder.place
-</span><span class="line"> 
-</span><span class="line"> anotherOrderFuture onSuccess{
-</span><span class="line">   case x =&gt; println("Success " + x)
-</span><span class="line"> }
-</span><span class="line"> 
-</span><span class="line"> anotherOrderFuture onFailure{
-</span><span class="line">   case e =&gt; println("Failure " + e)
-</span><span class="line"> }
-</span><span class="line"> 
-</span><span class="line"> shop.process(anotherOrder)
-</span><span class="line"> 
-</span><span class="line"> Thread.sleep(10000)
+</span><span class="line">	val order = new Order("Meal")
+</span><span class="line">	println("place order!")
+</span><span class="line">	
+</span><span class="line">	val anotherOrder = new Order("Cake")
+</span><span class="line">	println("Place another order")
+</span><span class="line">	
+</span><span class="line">	Shop.process(order)
+</span><span class="line">	Shop.process(anotherOrder)
+</span><span class="line">	
+</span><span class="line">	Thread.sleep(10000)
+</span><span class="line">	
 </span><span class="line">}</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>运行的结果是这样的</p>
